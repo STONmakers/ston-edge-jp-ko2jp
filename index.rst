@@ -4,14 +4,14 @@
    contain the root `toctree` directive.
 
 
-STON Edge Server 완벽 가이드
+STON Edge Server完全ガイド
 ==========================
 
-:저자: STON 개발팀
-:최신버전: 2.5.11, 2018년 1월 25일
+:著者: STON開発チーム
+:最新バージョン: 2.5.11, 2018年1月25日
 
 
-1부. STON 기본: 설정 배우기
+1部。 STON基本：設定を学ぶ
 =============================
 
 .. toctree::
@@ -22,7 +22,7 @@ STON Edge Server 완벽 가이드
    admin/environment
 
 
-2부. HTTP 서비스
+2部。 HTTPサービス
 =============================
 
 .. toctree::
@@ -36,7 +36,7 @@ STON Edge Server 완벽 가이드
    admin/https
 
 
-3부. 관리/운영
+3部。 管理/運営
 =============================
 
 .. toctree::
@@ -48,7 +48,7 @@ STON Edge Server 완벽 가이드
    admin/wm
 
 
-4부. 고급기능
+4部。 高度な機能
 =============================
 
 .. toctree::
@@ -62,7 +62,7 @@ STON Edge Server 완벽 가이드
    admin/adv_topics
 
 
-5부. 부록
+5部。 付録
 =============================
 
 .. toctree::
