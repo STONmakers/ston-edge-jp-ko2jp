@@ -9,7 +9,7 @@
 
    <XXX Type="time" Unit="1440" Retention="10" Compression="OFF">ON</XXX>
 
--  ``Type (基本: time)`` , ``Unit (基本: 1440분)`` ログローリング条件を設定する。
+-  ``Type (基本: time)`` , ``Unit (基本: 1440分)`` ログローリング条件を設定する。
 
    - ``time`` 設定された ``unit`` 時間（単位：分）ごとにログファイルをローリングする。
    - ``size`` 設定された ``unit`` サイズ（単位：MB）ごとにログファイルをローリングする。
@@ -352,7 +352,7 @@ Accessログ
 -  ``cs-range`` クライアントが送信したRangeヘッダを記録する。
 -  ``sc-cachehit`` キャッシュHIT結果
 -  ``cs-acceptencoding`` クライアントが送信されるAccept-Encodingヘッダ
--  ``session-id`` HTTP HTTPクライアントセッションID (unsigned int64)
+-  ``session-id`` HTTPクライアントセッションID (unsigned int64)
 -  ``sc-content-length`` サーバの応答Content-Lengthヘッダの値
 
 Accessログは、送信成功/失敗したかに関係なく、すべてのHTTPトランザクションを記録する。 HTTPトランザクションは、クライアントがHTTP要求を送信するときに開始される。 STONがクライアントに応答を送信する前にHTTP接続が終了した場合、HTTPトランザクションも終了されたものとみなす。 ログには、 ``sc-status`` と ``sc-bytes`` が0に記録される。 主STONが元のサーバーからの応答を受信する前に、クライアントが接続を終了する場合、このようなログが記録される。
@@ -409,7 +409,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
 -  ``%...f`` ファイル名 ::
 
-      /mp4/iu.mp4 なら iu。  mp4を 記録
+      /mp4/iu.mp4 なら iu.mp4を 記録
 
 -  ``%...h`` HostName ::
 
