@@ -291,7 +291,7 @@ STON実行
         </Cache>
     </Server>
 
-.. コメント::
+.. note::
 
    STONは、基本的に、ディスクをストレージとして使用するため、ディスクが設定されていない場合、駆動されない。 詳細については、次の章で説明する。
 
@@ -419,10 +419,10 @@ example.com:8080/account/dir   example.com:8080
    GET / HTTP/1.1
    Host: origin.com:8888
 
-.. note:
+.. note::
 
-   원본서버에 example.com/account/dir처럼 경로가 붙어있다면 요청된 URL은 원본서버 주소 경로 뒤에 붙는다.
-   클라이언트가 /img.jpg를 요청하면 최종 주소는 example.com/account/dir/img.jpg가 된다.
+   ソースサーバーにexample.com/account/dirようパスがついている場合は、要求されたURLは、元のサーバーのアドレスのパスの後ろにつく。
+   クライアントが/img.jpgを要求すると、最終的なアドレスはexample.com/account/dir/img.jpgになる。
 
 
 .. _env-vhost-standbyorigin:
@@ -463,10 +463,10 @@ STONバージョンを確認する。 ::
 
    ./stonapi version
 
-.. note:
+.. note::
 
-   HTTP API는 &를 QueryString의 구분자로 인식하지만 Linux 콘솔에서는 다른 의미를 가진다.
-   &가 들어가는 명령어를 호출하는 경우 \&로 입려하거나 반드시 괄호(" /...&... ")로 호출하는 URL을 묶어야 한다.
+   HTTP APIは＆をQueryStringの区切り文字として認識しますが、Linuxコンソールでは、別の意味を持つ。
+   ＆が入るコマンドを呼び出す場合は、\＆にとして記入するか、必ず括弧（"/...＆..."）で呼び出すURLを囲む必要があります。
 
 
 ハードウェア情報照会
