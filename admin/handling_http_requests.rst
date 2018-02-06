@@ -122,7 +122,7 @@ STONはなるべくApacheのポリシーに従う。 特にセッション維持
       ``<Keep-Alive>`` 設定時 ``<ClientKeepAliveSec>`` を参照してますが、 ``<ClientKeepAliveSec>`` は、より根本的な問題と関連がある。 性能や資源的に最も重要な問題は、Idleセッション（= HTTPトランザクションが発生していないセッション）のまとめ視点をとるものである。 HTTPヘッダの設定は動的に変更されたり、時には省略されることがありますがIdleセッションクリーンアップは、はるかに敏感な問題である。 このような理由のために ``<ClientKeepAliveSec>`` は ``<KeepAliveHeader>`` に統合されず、別途存在する。
 
 
-5. ``<KeepAliveHeader>`` の ``Max`` 属性が設定されている場合우 ::
+5. ``<KeepAliveHeader>`` の ``Max`` 属性が設定されている場合 ::
 
       # server.xml - <Server><VHostDefault><Options>
       # vhosts.xml - <Vhosts><Vhost><Options>
@@ -462,12 +462,12 @@ Serverヘッダ
    # {URL条件}, {Method}, {Level} 順に表記する。
 
    /sample.css, no       // 圧縮し ない 。
-   *.css                 // *.css 条件について 基本 Methodと Levelで 圧縮する 。
-   *.htm, gzip           // *.htm 条件について gzipで 圧縮する 。 (基本 Level)
-   *.xml, , 9            // *.xml 条件について Level 9 に 圧縮する 。*。 (基本 Method)
-   *.js, gzip, 5         // *.js 条件について gzip（Level = 5） に 圧縮する 。
+   *.css                 // *.css 条件について 基本 Methodと Levelで 圧縮する。
+   *.htm, gzip           // *.htm 条件について gzipで 圧縮する。 (基本 Level)
+   *.xml, , 9            // *.xml 条件について Level 9 に 圧縮する。*。 (基本 Method)
+   *.js, gzip, 5         // *.js 条件について gzip（Level = 5） に 圧縮する。
 
-圧縮は、CPUリソースを大量に消費する機能である。 以下は、ファイルサイズ別GZIP（Level：9）の性能テストの結果である
+圧縮は、CPUリソースを大量に消費する機能である。 以下は、ファイルサイズ別GZIP（Level：9）の性能テストの結果である。
 
 -  ``OS`` CentOS 6.3 (Linux version 2.6.32-279.el6.x86_64 (mockbuild@c6b9.bsys.dev.centos.org) (gcc version 4.4.6 20120305(Red Hat 4.4.6-4) (GCC) ) #1 SMP Fri Jun 22 12:19:21 UTC 2012)
 -  ``CPU`` `Intel(R) Xeon(R) CPU E5-2603 0 @ 1.80GHz (8 processors) <http://www.cpubenchmark.net/cpu.php?cpu=Intel%20Xeon%20E5-2603%20@%201.80GHz>`_
@@ -594,5 +594,5 @@ On-the-flyでコンテンツを暗号化して送信する。
 
 .. note::
 
-   暗号化APIは、証明書に基づいて動作する。 したがって、証明書が異なる癌/復号化の結果が異なっている
+   暗号化APIは、証明書に基づいて動作する。 したがって、証明書が異なる癌/復号化の結果が異なっている。
 
