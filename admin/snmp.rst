@@ -191,7 +191,7 @@ OID   Name          Type      Description
 .3    version       String    バージョン
 .4    hostname      String    ホスト名
 .5    state         String    "Healthy" または "Inactive" または "Emergency"
-.6    uptime        Integer   実行時間（秒
+.6    uptime        Integer   実行時間（秒)
 .7    admin         String    <Admin> ... </Admin>
 .10   Conf          OID       Conf 拡張
 ===== ============= ========= ===========================================
@@ -543,8 +543,8 @@ OID                        Name                                Type       Descri
 .10.34. ``[vhostMin]``     http.res3xxCount                    Integer    ソースサーバーが送信した3xx応答数
 .10.35. ``[vhostMin]``     http.res3xxCompleteCount            Integer    ソースサーバーから成功した3xxトランザクション数
 .10.40. ``[vhostMin]``     http.res4xxAverage                  Integer    ソースサーバーが送信した平均4xx応答数
-.10.41. ``[vhostMin]``     http.res4xxCompleteAverage          Integer    ソースサーバーから成功した平均4xxトランザクション数수
-.10.42. ``[vhostMin]``     http.res4xxTimeRes                  Integer    ースサーバーから4xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.41. ``[vhostMin]``     http.res4xxCompleteAverage          Integer    ソースサーバーから成功した平均4xxトランザクション数
+.10.42. ``[vhostMin]``     http.res4xxTimeRes                  Integer    ソースサーバーから4xx応答ヘッダを受信するまでの平均所要時間（0.01ms）
 .10.43. ``[vhostMin]``     http.res4xxTimeComplete             Integer    ソースサーバーから4xx応答HTTP Transaction平均完了時間(0.01ms)
 .10.44. ``[vhostMin]``     http.res4xxCount                    Integer    ソースサーバーが送信した4xx応答数
 .10.45. ``[vhostMin]``     http.res4xxCompleteCount            Integer    ソースサーバーから成功した4xxトランザクション数
@@ -642,7 +642,7 @@ OID                        Name                                       Type      
 .11.3. ``[vhostMin]``      portbypass.sessionAverage                  Integer    Portバイパスしているクライアントの平均セッション数
 .11.4. ``[vhostMin]``      portbypass.closedAverage                   Integer    Portバイパス中のクライアントが接続を終了した平均回数
 .11.5. ``[vhostMin]``      portbypass.closedCount                     Integer    Portバイパス中のクライアントが接続を終了した回数
-.12                        ssl                                        OID        SSLクライアントのトラフィック情報보
+.12                        ssl                                        OID        SSLクライアントのトラフィック情報
 .12.2. ``[vhostMin]``      ssl.inbound                                Integer    SSLを介してクライアントから受信平均トラフィック(Bytes)
 .12.3. ``[vhostMin]``      ssl.outbound                               Integer    SSLを介してクライアントに送信平均トラフィック(Bytes)
 .13                        requestHitAverage                          OID        平均キャッシュHIT結果
@@ -827,7 +827,7 @@ OID                       Name                Type       Description
 .13. ``[vhostIndex]``     filesCountU8KB      Integer    8KB未満のファイル数
 .14. ``[vhostIndex]``     filesCountU16KB     Integer    16KB未満のファイル数
 .15. ``[vhostIndex]``     filesCountU32KB     Integer    32KB未満のファイル数
-.16. ``[vhostIndex]``     filesCountU64KB     Integer    64KB未満のファイル数수
+.16. ``[vhostIndex]``     filesCountU64KB     Integer    64KB未満のファイル数
 .17. ``[vhostIndex]``     filesCountU128KB    Integer    128KB未満のファイル数
 .18. ``[vhostIndex]``     filesCountU256KB    Integer    256KB未満のファイル数
 .19. ``[vhostIndex]``     filesCountU512KB    Integer    512KB未満のファイル数
@@ -934,7 +934,7 @@ OID                                           Name                              
 .10.54. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCount                      Integer    ソースサーバーが送信した5xx応答数
 .10.55. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCompleteCount              Integer    ソースサーバーから成功した5xxトランザクション数
 .10.60. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTimeoutAverage            Integer    平均ソースサーバー接続に失敗した回数
-.10.61. ``[vhostMin]`` . ``[vhostIndex]``     http.receiveTimeoutAverage            Integer    平均元サーバー送信に失敗した回数수
+.10.61. ``[vhostMin]`` . ``[vhostIndex]``     http.receiveTimeoutAverage            Integer    平均元サーバー送信に失敗した回数
 .10.62. ``[vhostMin]`` . ``[vhostIndex]``     http.connectAverage                   Integer    平均ソースサーバー接続成功回数
 .10.63. ``[vhostMin]`` . ``[vhostIndex]``     http.dnsQueryTime                     Integer    ソースサーバー接続時の平均DNSクエリの所要時間
 .10.64. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTime                      Integer    ソースサーバーの平均接続時間(0.01ms)
