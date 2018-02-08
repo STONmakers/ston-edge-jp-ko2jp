@@ -94,7 +94,7 @@ cacheやbypass条件を明確にしていない場合は、デフォルトの設
 ====================================
 
 ログイン状態のように、元のサーバーとクライアントが必ず1：1で通信する必要がある。
-`GET/POST 바이패스`_ の属性に元のサーバーを固定させることができる。 ::
+`GET/POST バイパス`_ の属性に元のサーバーを固定させることができる。 ::
 
    # server.xml - <Server><VHostDefault><Options>
    # vhosts.xml - <Vhosts><Vhost><Options>
@@ -134,7 +134,7 @@ cacheやbypass条件を明確にしていない場合は、デフォルトの設
 
    クライアントが、元のセッションを所有する。
 
-`GET/POST 바이패스`_ の属性に元のセッションを固定することができる。 ::
+`GET/POST バイパス`_ の属性に元のセッションを固定することができる。 ::
 
    # server.xml - <Server><VHostDefault><Options>
    # vhosts.xml - <Vhosts><Vhost><Options>
