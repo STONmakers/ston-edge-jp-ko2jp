@@ -421,8 +421,7 @@ example.com:8080/account/dir   example.com:8080
 
 .. note::
 
-   ソースサーバーにexample.com/account/dirようパスがついている場合は、要求されたURLは、元のサーバーのアドレスのパスの後ろにつく。
-   クライアントが/img.jpgを要求すると、最終的なアドレスはexample.com/account/dir/img.jpgになる。
+   ソースサーバーにexample.com/account/dirようパスがついている場合は、要求されたURLは、元のサーバーのアドレスのパスの後ろにつく。 クライアントが/img.jpgを要求すると、最終的なアドレスはexample.com/account/dir/img.jpgになる。
 
 
 .. _env-vhost-standbyorigin:
