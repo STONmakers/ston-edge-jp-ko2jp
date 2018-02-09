@@ -77,7 +77,7 @@ BT（Bandwidth Throttling）と（各セッションごとに）クライアン�
    -  ``<Ratio> (基本: 100 %)``
       ``<Bandwidth>`` 設定の率を反映して、帯域幅を設定する。
 
-   -  ``<Boost> (基本: 5 초)``
+   -  ``<Boost> (基本: 5 秒)``
       一定時間だけのデータを速度制限なしのクライアントに送信する。 データの量は、 ``<Boost>`` X ``<Bandwidth>`` X ``<Ratio>`` 公式で計算する。
 
 -  ``<Throttling>``
@@ -156,7 +156,7 @@ QueryString優先条件
     # 10秒のデータを速度制限なしで送信した後、1.3Mbps（1mbps X 130％）で、クライアントに送信する。
     http://www.winesoft.co.kr/video/sample.wmv?myboost=10&mybandwidth=1&myratio=130
 
-必ずしもすべてのパラメータを指定する必要はない。::
+必ずしもすべてのパラメータを指定する必要はない。 ::
 
     http://www.winesoft.co.kr/video/sample.wmv?myratio=150
 
