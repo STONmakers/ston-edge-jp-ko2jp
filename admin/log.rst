@@ -385,7 +385,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
     192.168.0.88 192.168.0.12 6276 id=ston; ui.js example.com HTTP "STON" GET 80 "GET /ui.js HTTP/1.1" 200 2014-04-03 21:21:54 1 X 233 63276 1 2571982 TCP_MISS HTTP/1.1
     192.168.0.88 192.168.0.12 626 id=winesoft; hls.m4u8 example.com HTTP "STON" GET 80 "GET /hls.m4u8 HTTP/1.1" 200 2014-04-03 21:21:54 2 X 124 6312333276 2 2571983 TCP_REFRESH_HIT HTTP/1.1
 
-`Apacheのログ形式 <https://httpd.apache.org/docs/2.2/ko/mod/mod_log_config.html>`_ をベースに開発され、いくつかの拡張フィールドがあります。 各フィールドの区切り文字には制限がありませんSpaceを使用する場合は、User-AgentのようにSpaceが含まれているフィールドは、二重引用符（ "..."）で囲んで設定します。
+`Apacheのログ形式 <https://httpd.apache.org/docs/2.2/ko/mod/mod_log_config.html>`_ をベースに開発され、いくつかの拡張フィールドがあります。 各フィールドの区切り文字には制限がありませんSpaceを使用する場合は、User-AgentのようにSpaceが含まれているフィールドは、二重引用符（"..."）で囲んで設定します。
 
 -  ``%...a`` クライアントのIP ::
 
