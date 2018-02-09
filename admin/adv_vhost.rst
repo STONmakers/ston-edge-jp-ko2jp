@@ -264,17 +264,17 @@ Redirect追跡
 
    # vhosts.xml - <Vhosts>
 
-   //  元のサーバーが 5 xxに 応答したり、 キャッシュしてい なかった 場合 （= fail）、 要求を bar。  comに 委任する 。
+   //  元のサーバーが 5 xxに 応答したり、 キャッシュしてい なかった 場合 （= fail）、 要求を bar.comに 委任する 。
    <Vhost Name="foo.com">
      <VhostLink Condition="5xx,fail">bar.com</VhostLink>
    </Vhost>
 
-   // 元のサーバーが 4 xxに 応答した ときに 、その 要求を helloworld。  comに 委任する 。
+   // 元のサーバーが 4 xxに 応答した ときに 、その 要求を helloworld.comに 委任する 。
    <Vhost Name="bar.com">
      <VhostLink Condition="4xx">helloworld.com</VhostLink>
    </Vhost>
 
-   // 元のサーバーで 403、404、または 5 xxに 応答した ときに 、その 要求を example。  comに 委任する 。
+   // 元のサーバーで 403、404、または 5 xxに 応答した ときに 、その 要求を example.comに 委任する 。
    <Vhost Name="helloworld.com">
      <VhostLink Condition="403,404,5xx">example.com</VhostLink>
    </Vhost>
