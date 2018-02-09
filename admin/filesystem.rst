@@ -127,7 +127,7 @@ File Systemは、最初のパスで、この問題を解決する。 例えば�
 ファイルのプロパティ
 ====================================
 
-ほとんどFile I / Oの最初のステップは、ファイルの属性を取得するものである。 ファイルをopenする前に、ファイルの情報を得ることは当然の順だ。 Kernelこのファイルの属性をサービスする過程をSTONの観点から見ると、以下の通りである。 （/ cachefsはMountパスなので、Kernelが省略する。）
+ほとんどFile I / Oの最初のステップは、ファイルの属性を取得するものである。 ファイルをopenする前に、ファイルの情報を得ることは当然の順だ。 Kernelこのファイルの属性をサービスする過程をSTONの観点から見ると、以下の通りである。 （/cachefsはMountパスなので、Kernelが省略する。）
 
 .. figure:: img/conf_fs4.png
    :align: center
@@ -226,7 +226,7 @@ File Systemを利用して簡単にWowzaを連動することができる。 STO
 
 **1. [STON - グローバル設定] ファイルシステムの設定ON**
 
-  グローバル設定（server.xml）には、次のように ``<FileSystem>`` を ``ON`` に設定する。 （例では、Mountパスを「/ cachefs」に設定する。） ::
+  グローバル設定（server.xml）には、次のように ``<FileSystem>`` を ``ON`` に設定する。 （例では、Mountパスを "/cachefs"に設定する。） ::
 
      # server.xml - <Server><Cache>
 
