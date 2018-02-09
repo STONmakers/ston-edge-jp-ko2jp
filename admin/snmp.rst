@@ -972,7 +972,7 @@ OID                                           Name                              
 .1. ``[vhostMin]`` . ``[vhostIndex]``         inbound                                   Integer    クライアントから受信平均トラフィック(Bytes)
 .2. ``[vhostMin]`` . ``[vhostIndex]``         outbound                                  Integer    クライアントに送信平均トラフィック(Bytes)
 .3. ``[vhostMin]`` . ``[vhostIndex]``         sessionAverage                            Integer    完全なクライアントの平均セッション数
-.4. ``[vhostMin]`` . ``[vhostIndex]``         activesessionAverage                      Integer    全クライアントの転送中の平均セッション数균 세션수
+.4. ``[vhostMin]`` . ``[vhostIndex]``         activesessionAverage                      Integer    全クライアントの転送中の平均セッション数
 .10                                           http                                      OID        クライアントのHTTPトラフィック情報
 .10.1. ``[vhostMin]`` . ``[vhostIndex]``      http.inbound                              Integer    クライアントから受信平均HTTPトラフィック(Bytes)
 .10.2. ``[vhostMin]`` . ``[vhostIndex]``      http.outbound                             Integer    クライアントに送信平均HTTPトラフィック(Bytes)
