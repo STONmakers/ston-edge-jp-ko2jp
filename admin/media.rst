@@ -6,7 +6,7 @@
 .. note::
 
    - `[動画講座]みよう！ STON Edge Server - Chapter 4.リアルタイム画像処理 <https://youtu.be/Pdfe-HbtXVs?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
-   - `[動画講座]みよう！ STON Edge Server - Chapter 5動画配信 <https://youtu.be/YjOEVamhah4?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
+   - `[動画講座]みよう！ STON Edge Server - Chapter 5.動画配信 <https://youtu.be/YjOEVamhah4?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
 
 この章では、メディアをスマートにサービスする方法について説明する。 クライアント環境とサービスの多様化とコンテンツを様々な形に加工する場合が多い。 ため、同じコンテンツがさまざまな形で元のサーバーに存在することになる。 この方法は、処理時間とストレージ容量の無駄につながるだけでなく、管理が難しい。
 
