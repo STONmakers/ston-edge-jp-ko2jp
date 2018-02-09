@@ -464,7 +464,7 @@ Serverヘッダ
    /sample.css, no       // 圧縮し ない 。
    *.css                 // *.css 条件について 基本 Methodと Levelで 圧縮する。
    *.htm, gzip           // *.htm 条件について gzipで 圧縮する。 (基本 Level)
-   *.xml, , 9            // *.xml 条件について Level 9 に 圧縮する。*。 (基本 Method)
+   *.xml, , 9            // *.xml 条件について Level 9 に 圧縮する。 (基本 Method)
    *.js, gzip, 5         // *.js 条件について gzip（Level = 5） に 圧縮する。
 
 圧縮は、CPUリソースを大量に消費する機能である。 以下は、ファイルサイズ別GZIP（Level：9）の性能テストの結果である。
