@@ -8,7 +8,7 @@
    - `[動画講座]みよう！ STON Edge Server - Chapter 2.を設定する <https://youtu.be/BROcSuFyHOQ?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
    - `[動画講座]みよう！ STON Edge Server - Chapter 3.仮想ホスト作成 <https://youtu.be/AvxxSWgXcqA?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
 
-この章では、設定の構造と変更された設定を適用する方法について説明する。 構造を正確に理解する必要が迅速にサーバーを配置することができるだけでなく、障害の状況を柔軟に克服することができる。
+この章では、設定の構造と変更された設定を適用する方法を説明する。 構造を正確に理解すれば迅速なサーバーデプロイ・障害状況にも円滑な対応ができる。
 
 設定は大きく全域（server.xml）と仮想ホスト（vhosts.xml）に分けられる。
 
@@ -64,8 +64,8 @@ server.xmlグローバル設定
         <VHostDefault> ... </VHostDefault>
     </Server>
 
-まずグローバル設定の構造と簡単な機能を中心に説明する。
-:ref:`access-control` や :ref:`snmp` などのグローバル設定に位置が図体の大きい機能については、各トピックをカバーする章で説明する。
+まずグローバル設定の構造と簡単な機能を説明する。グローバル設定中ボリュームが大きい機能については、
+:ref:`access-control` や :ref:`snmp` などの各トピックをカバーする章で説明する。
 
 .. toctree::
    :maxdepth: 2
@@ -98,7 +98,7 @@ server.xmlグローバル設定
     管理者情報（メールや名前）を設定する。 この項目は、SNMP照会目的でのみ使用される。
 
 -  ``<Manager>``
-    管理の目的で使用マネージャーポートとACL（Access Control List）を設定する。 ACLは、IP、IPアドレスの範囲、BitMask、Subnet以上四つの形式をサポートします。 接続したセッションがAllowにアクセスが許可されたIPアドレスがなければ接続を遮断する。 APIを呼び出すIPが ``<Allow>`` リストに必ず設定する必要がある。
+    管理の目的で使用マネージャーポートとACL（Access Control List）を設定する。 ACLは、IP、IPアドレスの範囲、BitMask、Subnetの四つの形式をサポートします。 接続したセッションがAllowにアクセスが許可されたIPアドレスがなければ接続を遮断する。 APIを呼び出すIPが ``<Allow>`` リストに必ず設定する必要がある。
 
     アクセス条件に応じて、アクセス権限（Role）を設定することができる。 アクセス権がない要求については、 **401 Unauthorized** で応答する。
     ``<Allow>`` の条件に ``Role`` 属性を明示的に宣言していない場合は ``<Manager>`` の ``Role`` 属性が適用される。
@@ -111,9 +111,9 @@ server.xmlグローバル設定
 
     - ``HttpMethod``
 
-      - ``ON (基本)`` api-etc-httpmethod呼び出し時ACLを点検する。
+      - ``ON (基本)``  :ref:`caching-purge-http-method` 呼び出し時ACLを点検する。
 
-      - ``OFF`` api-etc-httpmethod呼び出し時ACLを検査していない。
+      - ``OFF`` :ref:`caching-purge-http-method` 呼び出し時ACLを検査していない。
 
     - ``UploadMultipartName`` :ref:`api-conf-upload` の変数名を設定する。
 
@@ -141,7 +141,7 @@ Cachingされたコンテンツを格納するStorageを構成する。 ::
     ディスクは、障害が最も多く発生する機器であるため、明確な障害条件を設定することをお勧めします。
     ``DiskFailSec (基本: 60秒)`` の間 ``DiskFailCount (基本: 10)`` だけディスクの操作が失敗した場合、そのディスクは自動的に排除される。 排除されたディスクの状態は "Invalid"に指定される。
 
-    すべてのディスクが排除されることもあり、このときの動作は、 ``OnCrash`` 属性に設定する。.
+    すべてのディスクが排除されることもあり、このときの動作は、 ``OnCrash`` 属性に設定する。
 
     - ``hang (基本)`` 障害ディスクの両方を再投入する。 通常のサービスを期待しているというよりは、元のを保護する目的が強い。
 
@@ -182,7 +182,7 @@ Cachingされたコンテンツを格納するStorageを構成する。 ::
       .. figure:: img/bodyratio1.png
          :align: center
 
-         ContentMemoryRatioを通じてメモリの割合を設定する。
+         ContentMemoryRatioを通じてメモリの割合を設定する。
 
    例えば、ゲームのダウンロードのようなファイルの数は多くないが、Contentsサイズが大きいサービスの場合File I / O負荷が負担になる。 このような場合、 ``<ContentMemoryRatio>`` を高め、より多くのContentsデータがメモリに常駐するように設定すると、サービスの品質を向上させることができる。
 
@@ -234,7 +234,7 @@ Cachingされたコンテンツを格納するStorageを構成する。 ::
        </Cache>
 
 -  ``<ConfigHistory> (基本: 30日)``
-    STONは設定が変更されるたびに、すべての設定をバックアップする。 解凍後./conf/に1つのファイルとして保存される。 ファイル名は、「日付_時刻_HASH.tgz "に生成される。 ::
+    STONは設定が変更されるたびに、すべての設定をバックアップする。 解凍後./conf/に1つのファイルとして保存される。 ファイル名は、"日付_時刻_HASH.tgz "に生成される。 ::
 
        20130910_174843_D62CA26F16FE7C66F81D215D8C52266AB70AA5C8.tgz
 
@@ -246,7 +246,7 @@ Cachingされたコンテンツを格納するStorageを構成する。 ::
 強制Cleanup
 ------------------------------------
 
-API呼び出しにCleanupする。 ``<Age>`` をパラメータとして入力することができる。 ::
+API呼び出しにCleanupする。 <Age> をパラメータとして入力することができる。 ::
 
    http://127.0.0.1:10040/command/cleanup
    http://127.0.0.1:10040/command/cleanup?age=10
@@ -317,7 +317,7 @@ vhosts.xml仮想ホストの設定
 
 -  ``<Vhost>`` バーチャルホストを設定する。
 
-   - ``Status (基本: Active)`` nactiveである場合は、その仮想ホストをサービスしていない。 キャッシュされたコンテンツは、維持される。
+   - ``Status (基本: Active)`` Inactiveである場合は、その仮想ホストをサービスしていない。 キャッシュされたコンテンツは、維持される。
    - ``Name`` 仮想ホスト名。 重複することがない。
 
 ``<Vhost>`` を削除すると、その仮想ホストが削除される。 削除された仮想ホストのすべてのコンテンツは、削除対象となる。 再度追加しても、コンテンツは甦るない。
@@ -350,7 +350,7 @@ vhosts.xml仮想ホストの設定
 仮想ホストの検索順序は次のとおりである。
 
 1. ``<Vhost>`` の ``Name`` と一致するか？
-2. 明示的な ``<Alias>`` と一致するか？
+2. 明示的な ``<Alias>`` と一致する？
 3. パターン ``<Alias>`` を満足するか？
 
 
@@ -399,7 +399,7 @@ Default仮想ホスト
 
 .. note:
 
-   서비스 포트를 열지 않으려면 ``OFF`` 로 설정한다. ::
+   サービスポートを開く場合は、`` OFF``に設定する。 ::
 
       # vhosts.xml - <Vhosts>
 
@@ -501,7 +501,7 @@ Default仮想ホスト
    - ``loaded`` STONが開始される
    - ``modified`` 設定が（管理者またはWMによって）変更されたとき
    - ``uploaded`` 設定ファイルAPIを介してアップロードされたとき
-   - ``restored`` 設定ファイルがAPIを介して回復されたとき
+   - ``restored`` 設定ファイルがAPIを介して回復されたと
 -  ``size`` 設定ファイルサイズ
 -  ``hash`` 設定ファイルをSHA-1でhash値
 
