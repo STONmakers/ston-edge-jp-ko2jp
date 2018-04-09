@@ -17,7 +17,7 @@
 URL前処理
 ====================================
 
-`정규표현식 <http://en.wikipedia.org/wiki/Regular_expression>`_ を使用して要求されたURLを変更する。 URL前処理が設定されている場合は、すべてのクライアントの要求（HTTPまたはFile I / O）は、必ずURL Rewriterを経る。
+`正規表現 <http://en.wikipedia.org/wiki/Regular_expression>`_ を使用して要求されたURLを変更する。 URL前処理が設定されている場合は、すべてのクライアントの要求（HTTPまたはFile I / O）は、必ずURL Rewriterを経る。
 
 .. figure:: img/urlrewrite1.png
    :align: center
@@ -46,7 +46,7 @@ URL前処理
 
 -  ``<URLRewrite>``
 
-   URL前処理を設定する。
+  URL前処理を設定する。
    ``AccessLog (基本: Replace)`` 属性は、Accessログに記録されるURLを設定する。
    ``Replace`` の場合、変換後のURL（/logo.jpg）を、 ``Pattern`` の場合、変換前のURL（/baseball/logo.jpg）をAccessログに記録する。
 
@@ -54,8 +54,7 @@ URL前処理
 
    -  ``<Replace>`` 変換形式を設定する。 一致したパターンには＃1、＃2のように使用することができる。 ＃0は、要求URL全体を意味する。 パターンは、最大9個（＃9）まで指定することができる。
 
-スループットは :ref:`monitoring_stats` で提供され :ref:`api-graph-urlrewrite` でも確認することができる。
-URL前処理は :ref:`media-trimming` , :ref:`media-hls` などの他の機能と組み合わせて、表現を簡潔にする。 ::
+スループットは :ref:`monitoring_stats` で提供され :ref:`api-graph-urlrewrite` でも確認することができる。 URL前処理は :ref:`media-trimming` , :ref:`media-hls` などの他の機能と組み合わせて、表現を簡潔にする。 ::
 
    # vhosts.xml - <Vhosts>
 
@@ -241,7 +240,7 @@ Redirect追跡
 
    # vhosts.xml - <Vhosts>
 
-   // cloud.comに ない(=404 Not Found) のコンテンツは、nas。  comで サービスする 。
+   // cloud.comに ない(=404 Not Found) のコンテンツは、nas.comで サービスする 。
    <Vhost Name="cloud.com">
      <VhostLink Condition="404">nas.com</VhostLink>
    </Vhost>
@@ -250,13 +249,13 @@ Redirect追跡
    </Vhost>
 
 
-:ref:`admin-log-access` のvhostlinkフィールドを介してクライアントの要求がどの仮想ホストで処理されたことが分かる。 「 - 」は、要求がリンクされていないことを意味し、 "nas.com」は、要求がリンクされてnas.comで処理されたことを意味する。 ::
+:ref:`admin-log-access` のvhostlinkフィールドを介してクライアントの要求がどの仮想ホストで処理されたことが分かる。 "-" は、要求がリンクされていないことを意味し、 "nas.com" は、要求がリンクされてnas.comで処理されたことを意味する。 ::
 
     #Fields: date time s-ip cs-method cs-uri-stem ...(中略)... vhostlink
     2016.11.24 16:52:24 220.134.10.5 GET /web/h.gif ...(中略)... -
     2016.11.24 16:52:26 220.134.10.5 GET /favicon.ico ...(中略)... nas.com
 
-リンクが複数回発生した場合、「+」を区切り文字としてリンクされたすべての仮想ホストが明示される。 この場合、最後の仮想ホストが最終リクエストを処理した仮想ホストである。
+リンクが複数回発生した場合、"+" を区切り文字としてリンクされたすべての仮想ホストが明示される。 この場合、最後の仮想ホストが最終リクエストを処理した仮想ホストである。
 
 次のように複数の仮想ホストを別の条件でリンクすることができる。
 
@@ -264,22 +263,22 @@ Redirect追跡
 
    # vhosts.xml - <Vhosts>
 
-   //  元のサーバーが 5 xxに 応答したり、 キャッシュしてい なかった 場合 （= fail）、 要求を bar.comに 委任する 。
+   //  元のサーバーが 5 xxに 応答したり、 キャッシュしてい なかった 場合 （= fail）、 要求を bar.comに 委任する。
    <Vhost Name="foo.com">
      <VhostLink Condition="5xx,fail">bar.com</VhostLink>
    </Vhost>
 
-   // 元のサーバーが 4 xxに 応答した ときに 、その 要求を helloworld.comに 委任する 。
+   // 元のサーバーが 4 xxに 応答した ときに 、その 要求を helloworld.comに 委任する。
    <Vhost Name="bar.com">
      <VhostLink Condition="4xx">helloworld.com</VhostLink>
    </Vhost>
 
-   // 元のサーバーで 403、404、または 5 xxに 応答した ときに 、その 要求を example.comに 委任する 。
+   // 元のサーバーで 403、404、または 5 xxに 応答した ときに 、その 要求を example.comに 委任する。
    <Vhost Name="helloworld.com">
      <VhostLink Condition="403,404,5xx">example.com</VhostLink>
    </Vhost>
 
-   // もはや 委任してい ない 。
+   // もはや 委任してい ない。
    <Vhost Name="example.com">
    </Vhost>
 
