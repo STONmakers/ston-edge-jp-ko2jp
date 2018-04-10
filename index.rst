@@ -57,7 +57,8 @@ STON Edge Server完全ガイド
    admin/adv_vhost
    admin/access_control
    admin/bandwidth_control
-   admin/media
+   admin/image
+   admin/video
    admin/filesystem
    admin/adv_topics
 
