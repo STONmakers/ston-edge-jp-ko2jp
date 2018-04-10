@@ -1,16 +1,13 @@
 .. _media-video:
 
-18장. 동영상
+第18章 動画
 ******************
 
 .. note::
 
-   - `[동영상 강좌] 해보자! STON Edge Server - Chapter 5. 동영상 전달 <https://youtu.be/YjOEVamhah4?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
+   - `[動画講座]みよう！ STON Edge Server - Chapter 5. 動画配信 <https://youtu.be/YjOEVamhah4?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
 
-이 장에서는 비디오/오디오를 스마트하게 서비스하는 방법에 대해 설명한다.
-클라이언트 사이드는 끊김없는 원활한 재생이 일관된 목적인 반면 서버사이드는 아주 복잡하다.
-화질상승은 더 큰 동영상을 생성하며 더 많은 대역폭과 저장공간을 필요로 한다.
-STON은 다양한 On-the-fly 기법을 이용해 기존 Back-End의 수정없이 유연한 전송기능을 제공한다. 
+この章では、ビデオ/オーディオをスマートにサービスする方法について説明する。 クライアント側は、シームレスなスムーズな再生が一貫性のある目的に対し、サーバ側では、非常に複雑である。 画質の上昇は、より大きな動画を作成し、より多くの帯域幅とストレージ容量を必要とする。 STONは、様々なOn-the-fly手法を用いて、既存Back-Endの修正なし柔軟な転送機能を提供する。 
 
 
 .. toctree::
@@ -22,16 +19,11 @@ STON은 다양한 On-the-fly 기법을 이용해 기존 Back-End의 수정없이
 MP4 HLS
 ====================================
 
-MP4파일을 HLS(HTTP Live Streaming)로 서비스한다.
-원본서버는 더 이상 HLS서비스를 위해 파일을 분할저장할 필요가 없다.
-MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간으로 .m3u8/.ts파일 변환 후 서비스한다.
+MP4ファイルをHLS（HTTP Live Streaming）にサービスする。 ソースサーバーは、もはやHLSサービスのためにファイルを分割保存する必要がない。 MP4ファイルのヘッダの位置に関係なく、ダウンロードと同時にリアルタイムで.m3u8 / .tsファイルの変換後のサービスである。
 
 ..  note::
 
-    MP4HLS는 Elementary Stream(Video 또는 Audio)을 변환하는 트랜스코딩(Transcoding)이 아니다.
-    그러므로 HLS에 적합한 형식으로 인코딩된 MP4파일에 한해서 원활한 단말 재생이 가능하다.
-    인코딩이 적합하지 않을 경우 화면이 깨지거나 소리가 재생되지 않을 수 있다.
-    현재(2014.2.20) Apple에서 밝히고 있는 Video/Audio 인코딩 규격은 다음과 같다.
+    MP4HLSはElementary Stream（VideoまたはAudio）を変換するトランスコーディング（Transcoding）ではない。 したがって、HLSに適した形式でエンコードされたMP4ファイルに限って円滑な端末の再生が可能である。 エンコーディングが適合しない場合は、画面が割れたり音が再生されないことがあります。 現在（2014.2.20）Appleの言っているVideo / Audioエンコード規格は、次のとおりである。
 
     What are the specifics of the video and audio formats supported?
     Although the protocol specification does not limit the video and audio formats, the current Apple implementation supports the following formats:
@@ -47,24 +39,21 @@ MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간�
     Note: iPad, iPhone 3G, and iPod touch (2nd generation and later) support H.264 Baseline 3.1. If your app runs on older versions of iPhone or iPod touch, however, you should use H.264 Baseline 3.0 for compatibility. If your content is intended solely for iPad, Apple TV, iPhone 4 and later, and Mac OS X computers, you should use Main Level 3.1.
 
 
-기존 방식의 경우 Pseudo-Streaming과 HLS를 위해 다음과 같이 원본파일이 각각 존재해야 한다.
-이런 경우 STON 역시 원본 파일을 그대로 복제하여 고객에게 서비스한다.
-하지만 재생시간이 길수록 파생파일은 많아지며 관리의 어려움은 증가한다.
+従来方式の場合、Pseudo-StreamingとHLSのために、以下のように、元のファイルがそれぞれ存在しなければならない。 このような場合、STONも、元のファイルをそのまま複製して、顧客にサービスする。 しかし、再生時間が長いほど、派生ファイルは多くなり、管理の難しさは増加する。
 
 .. figure:: img/conf_media_mp4hls1.png
    :align: center
 
-   수고가 많은 HLS
+   手間が多くHLS
 
-``<MP4HLS>`` 는 원본파일로부터 HLS서비스에 필요한 파일을 동적으로 생성한다.
+``<MP4HLS>`` は、元のファイルからHLSサービスに必要なファイルを動的に生成する。
 
 .. figure:: img/conf_media_mp4hls2.png
    :align: center
 
-   똑똑한 HLS
+   スマートHLS
 
-모든 .m3u8/.ts파일은 원본파일에서 파생되며 별도의 저장공간을 소비하지 않는다.
-서비스 즉시 메모리에 임시적으로 생성되며 서비스되지 않을 때 자동으로 없어진다. ::
+すべての.m3u8 / .tsファイルは、元のファイルから派生し、別のストレージスペースを消費しない。 サービスすぐにメモリに一時的に生成されサービスされない場合自動的に消える。 ::
 
    # server.xml - <Server><VHostDefault><Media>
    # vhosts.xml - <Vhosts><Vhost><Media>
@@ -78,65 +67,60 @@ MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간�
 
 -  ``<MP4HLS>``
 
-   - ``Status (기본: Inactive)`` 값이 ``Active`` 일 때만 활성화된다.
+   - ``Status (デフォルト: Inactive)`` の値が ``Active`` の場合にのみ有効になる。
 
-   - ``Keyword (기본: mp4hls)`` HLS 서비스 키워드
+   - ``Keyword (デフォルト: mp4hls)`` HLSサービスキーワード
 
--  ``<Index> (기본: index.m3u8)`` HLS 인덱스(.m3u8) 파일명
+-  ``<Index> (デフォルト: index.m3u8)`` HLSインデックス（.m3u8）ファイル名 
 
-   - ``Ver (기본 3)`` 인덱스 파일 버전.
-     3인 경우 ``#EXT-X-VERSION:3`` 헤더가 명시되며 ``#EXTINF`` 의 시간 값이 소수점 3째 자리까지 표시된다.
-     1인 경우 ``#EXT-X-VERSION`` 헤더가 없으며, ``#EXTINF`` 의 시간 값이 정수(반올림)로 표시된다.
+   - ``Ver (デフォルト 3)`` インデックスファイルのバージョン。 3である場合、 ``#EXT-X-VERSION:3`` ヘッダが明示されて ``#EXTINF`` の時刻の値が小数点3桁目まで表示される。
+     1の場合、 ``#EXT-X-VERSION`` ヘッダがなく、 ``#EXTINF`` の時間値が整数（丸め）に表示される。
 
-   - ``Alternates (기본: OFF)`` Stream Alternates 사용여부.
+   - ``Alternates (デフォルト: OFF)`` Stream Alternates使用するかどうか。
 
      .. figure:: img/hls_alternates_off.png
         :align: center
 
-        OFF. ``<Index>`` 에서 TS목록을 서비스한다.
+        OFF. ``<Index>`` でTSリストをサービスする。
 
      .. figure:: img/hls_alternates_on.png
         :align: center
 
-        ON. ``<AlternatesName>`` 에서 TS목록을 서비스한다.
+        ON. ``<AlternatesName>`` でTSリストをサービスする。
 
--  ``<Sequence> (기본: 0)`` .ts 파일의 시작 번호. 이 수를 기준으로 순차적으로 증가한다.
+-  ``<Sequence> (デフォルト: 0)`` .tsファイルの開始番号。 このことに基づいて順次増加する。
 
--  ``<Duration> (기본: 10초)`` MP4를 HLS로 분할하는 기준 시간(초).
-   분할의 기준은 Video/Audio의 KeyFrame이다.
-   KeyFrame은 들쭉날쭉할 수 있으므로 정확히 분할되지 않는다.
-   만약 10초로 분할하려는데 KeyFrame이 9초와 12초에 있다면 가까운 값(9초)을 선택한다.
+-  ``<Duration> (デフォルト: 10초)`` のMP4 HLSに分割する基準時間（秒）。 分割の基準は、Video / AudioのKeyFrameある。 KeyFrameはギザギザすることができますので、正確に分割されない。 もし10秒分割しようとしてKeyFrameが9秒と12秒の場合は近い値（9秒）を選択する。
 
--  ``<AlternatesName> (기본: playlist.m3u8)`` Stream Alternates 파일명. ::
+-  ``<AlternatesName> (デフォルト: playlist.m3u8)`` Stream Alternates ファイル名。 ::
 
       http://www.example.com/video.mp4/mp4hls/playlist.m3u8
 
 
-서비스 주소가 다음과 같다면 해당 주소로 Pseudo-Streaming을 진행할 수 있다. ::
+サービスアドレスは次のとおりである場合は、そのアドレスにPseudo-Streamingを行うことができる。 ::
 
     http://www.example.com/video.mp4
 
-가상호스트는 ``<MP4HLS>`` 에 정의된 ``Keyword`` 문자열을 인식함으로써 HLS서비스를 진행한다.
-다음 URL이 호출되면 /video.mp4로부터 index.m3u8파일을 생성한다. ::
+仮想ホストは ``<MP4HLS>`` に定義された ``Keyword`` 文字列を認識することにより、HLSサービスを進行する。
+次のURLが呼び出されると、/video.mp4からindex.m3u8ファイルを生成する。 ::
 
    http://www.example.com/video.mp4/mp4hls/index.m3u8
 
-``Alternates`` 속성이 ON이라면 ``<Index>`` 파일은 ``<AlternatesName>`` 파일을 서비스한다. ::
+``Alternates`` 属性がONであれば、 ``<Index>`` ファイルは、 ``<AlternatesName>`` ファイルをサービスする。 ::
 
    #EXTM3U
    #EXT-X-VERSION:3
    #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=200000,RESOLUTION=720x480
    /video.mp4/mp4hls/playlist.m3u8
 
-``#EXT-X-STREAM-INF`` 의 Bandwidth와 Resolution은 영상을 분석하여 동적으로 제공한다.
+``#EXT-X-STREAM-INF`` の Bandwidth와 Resolutionは映像を分析して、動的に提供する。
 
 .. note::
 
-   Stream Alternates를 제공하긴 하지만 현재 버전에서 index.m3u8는 항상 하나의 서브 인덱스 파일(playlist.m3u8)만을 제공한다.
-   캐시 입장에서는 video_1080.mp4와 video_720.mp4가 (인코딩 옵션만 다른) 같은 영상인지 알 수 없기 때문이다.
+   Stream Alternatesを提供しますが、現在のバージョンではindex.m3u8は常に一つのサブインデックスファイル（playlist.m3u8）だけを提供する。 キャッシュの立場では、video_1080.mp4とvideo_720.mp4が（エンコードオプションが、他の）のような映像なのか知ることができないからである。
 
 
-최종적으로 생성된 .ts 목록(버전 3)은 다음과 같다. ::
+最終的に生成された.tsリスト（バージョン3）は、次のとおりである。 ::
 
    #EXTM3U
    #EXT-X-TARGETDURATION:10
@@ -149,7 +133,7 @@ MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간�
    #EXTINF:10.112,
    /video.mp4/mp4hls/2.ts
 
-   ... (중략)...
+   ... (中略)...
 
    #EXTINF:10.847,
    /video.mp4/mp4hls/161.ts
@@ -157,40 +141,38 @@ MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간�
    /video.mp4/mp4hls/162.ts
    #EXT-X-ENDLIST
 
-분할에는 3가지 정책이 있다.
+分割には、3つのポリシーがあります。
 
--  **KeyFrame 간격보다** ``<Duration>`` **설정이 큰 경우**
-   KeyFrame이 3초, ``<Duration>`` 이 20초라면 20초를 넘지 않는 KeyFrame의 배수인 18초로 분할된다.
+-  **KeyFrame \間隔よりも** ``<Duration>`` **の設定が大きい場合**
+   KeyFrameが3秒、 ``<Duration>`` が20秒であれば、20秒を超えないKeyFrameの倍数である18秒に分割される。
 
--  **KeyFrame 간격과** ``<Duration>`` **이 비슷한 경우**
-   KeyFrame이 9초, ``<Duration>`` 이 10초라면 10초를 넘지 않는 KeyFrame의 배수인 9초로 분할된다.
+-  **KeyFrame間隔と** ``<Duration>`` **が似ている場合**
+   KeyFrameが9秒、 ``<Duration>`` が10秒であれば、10秒を超えないKeyFrameの倍数である9秒分けられる。
 
--  **KeyFrame 간격이** ``<Duration>`` **설정보다 큰 경우**
-   KeyFrame단위로 분할된다.
+-  **KeyFrame 間隔が** ``<Duration>`` **に設定よりも大きい場合우**
+   KeyFrame単位に分割される。
 
-다음 클라이언트 요청에 대해 STON이 어떻게 동작하는지 이해해보자. ::
+次のクライアント要求に対してSTONがどのように動作するのかを理解しましょう。  ::
 
    GET /video.mp4/mp4hls/99.ts HTTP/1.1
    Range: bytes=0-512000
    Host: www.winesoft.co.kr
 
-1.	``STON`` 최초 로딩 (아무 것도 캐싱되어 있지 않음.)
-#.	``Client`` HTTP Range 요청 (100번째 파일의 최초 500KB 요청)
-#.	``STON`` /video.mp4 파일 캐싱객체 생성
-#.	``STON`` /video.mp4 파일 분석을 위해 필요한 부분만을 원본서버에서 다운로드
-#.	``STON`` 100번째(99.ts)파일 서비스를 위해 필요한 부분만을 원본서버에서 다운로드
-#.	``STON`` 100번째(99.ts)파일 생성 후 Range 서비스
-#.	``STON`` 서비스가 완료되면 99.ts파일 파괴
+1.	``STON`` 最初のロード（何もキャッシュされていない。）
+#.	``Client`` HTTP Range要求（100番目のファイルの最初の500KBリクエスト）
+#.	``STON`` /video.mp4ファイルのキャッシュオブジェクトの作成
+#.	``STON`` /video.mp4ファイルの分析のために必要な部分だけを元のサーバーからダウンロード
+#.	``STON`` 100番目（99.ts）ファイルサービスのために必要な部分だけを元のサーバーからダウンロード
+#.	``STON`` 100番目（99.ts）ファイルを作成した後Rangeサービス
+#.	``STON`` サービスが完了すると、99.tsファイル破壊
 
 .. note::
 
-   ``MP4Trimming`` 기능이 ``ON`` 이라면 Trimming된 MP4를 HLS로 변환할 수 있다. (HLS영상을 Trimming할 수 없다. HLS는 MP4가 아니라 MPEG2TS 임에 주의하자.)
-   영상을 Trimming한 뒤, HLS로 변환하기 때문에 다음과 같이 표현하는 것이 자연스럽다. ::
+   ``MP4Trimming`` 機能が ``ON`` ならTrimmingたのMP4 HLSに変換できる。 （HLS画像をTrimmingすることができない。HLSのMP4ではなく、MPEG2TSであることに注意しよう。）映像をTrimmingした後、HLSに変換するため、次のように表現するのが自然である。 ::
 
       /video.mp4?start=0&end=60/mp4hls/index.m3u8
 
-   동작에는 문제가 없지만 QueryString을 맨 뒤에 붙이는 HTTP 규격에 어긋난다.
-   이를 보완하기 위해 다음과 같은 표현해도 동작은 동일하다. ::
+   動作には問題ありませんがQueryStringを一番後ろに付けるHTTP仕様に反する。 これを補完するために、次のような表現も動作は同じである。 ::
 
       /video.mp4/mp4hls/index.m3u8?start=0&end=60
       /video.mp4?start=0/mp4hls/index.m3u8?end=60
@@ -201,7 +183,7 @@ MP4파일 헤더의 위치에 상관없이 다운로드와 동시에 실시간�
 MP3 HLS
 ====================================
 
-MP3파일을 HLS(HTTP Live Streaming)로 서비스한다. ::
+MP3ファイルをHLS（HTTP Live Streaming）にサービスする。 ::
 
    # server.xml - <Server><VHostDefault><Media>
    # vhosts.xml - <Vhosts><Vhost><Media>
@@ -213,29 +195,25 @@ MP3파일을 HLS(HTTP Live Streaming)로 서비스한다. ::
       <AlternatesName>playlist.m3u8</AlternatesName>
    </MP3HLS>
 
-모든 설정과 동작방식이 `MP4 HLS`_ 와 동일하며 추가적으로 Segement형식을 선택할 수 있다.
+すべての設定と動作が `MP4 HLS`_ と同じでさらにSegement形式を選択することができる。 
 
 -  ``<MP3HLS>``
 
-   - ``SegmentType (기본: TS)`` 원본 MP3를 MPEG2-TS( ``TS`` ) 또는 ``MP3`` 로 분할한다.
+   - ``SegmentType (デフォルト: TS)`` ソースのMP3 MPEG2-TS( ``TS`` ) または ``MP3`` に分割する。
 
 .. note::
 
-   `MP4 HLS`_ 와 `MP3 HLS`_ 가 같은 ``Keyword`` 로 설정되어 있을 경우 `MP3 HLS`_ 는 동작하지 않는다.
+   `MP4 HLS`_ と `MP3 HLS`_ が同じ ``Keyword`` に設定されている場合、 `MP3 HLS`_ は動作しない。
 
 
 
 
-MP4/M4A 헤더위치 변경
+MP4/M4A ヘッダの位置を変更
 ====================================
 
-보통 MP4포맷의 경우 인코딩 과정 중에는 헤더를 완성할 수 없기 때문에 완료 후 파일의 맨 뒤에 붙인다.
-헤더를 앞으로 옮기려면 별도의 처리가 필요하다.
-헤더가 뒤에 있다면 이를 지원하지 않는 플레이어에서 Pseudo-Streaming이 불가능하다.
-헤더위치 변경을 통해 Pseudo-Streaming을 간편하게 지원할 수 있다.
+通常MP4形式の場合エンコード処理中にヘッダを完成することができないため、完了後にファイルの末尾に付ける。 ヘッダを今後移動するには、別の処理が必要である。 ヘッダが続いている場合、これをサポートしていないプレーヤーでPseudo-Streamingが不可能である。 ヘッダの位置の変更により、Pseudo-Streamingを簡単にサポートすることができる。
 
-헤더위치 변경은 전송단계에서만 발생할 뿐 원본의 형태를 변경하지 않는다.
-별도의 저장공간을 사용하지도 않는다. ::
+ヘッダの位置の変更は、送信段階でのみ発生するだけでテキストの形を変更しない。 別のストレージスペースを使用することもない。 ::
 
    # server.xml - <Server><VHostDefault><Media>
    # vhosts.xml - <Vhosts><Vhost><Media>
@@ -245,23 +223,21 @@ MP4/M4A 헤더위치 변경
 
 -  ``<UpfrontMP4Header>``
 
-   - ``OFF (기본)`` 아무 것도 하지 않는다.
+   - ``OFF (デフォルト)`` 何もしない。
 
-   - ``ON`` 확장자가 .mp4이고 헤더가 뒤에 있다면 헤더를 앞으로 옮겨서 전송한다.
+   - ``ON`` 拡張子が.mp4でヘッダが続いている場合、ヘッダーを今後移し送信する。
 
 -  ``<UpfrontM4AHeader>``
 
-   - ``OFF (기본)`` 아무 것도 하지 않는다.
+   - ``OFF (デフォルト)`` 何もしない。
 
-   - ``ON`` 확장자가 .m4a이고 헤더가 뒤에 있다면 헤더를 앞으로 옮겨서 전송한다.
+   - ``ON`` 拡張子が.m4aでヘッダが続いている場合、ヘッダーを今後移し送信する。
 
-처음 요청되는 콘텐츠의 헤더를 앞으로 옮겨야 한다면 헤더를 옮기기위해 필요한 부분을 우선적으로 다운로드 받는다.
-아주 영리할뿐만 아니라 빠르게 동작한다.
-커튼 뒤의 복잡한 과정과는 상관없이, 클라이언트는 원래부터 헤더가 앞에 있는 온전한 파일을 서비스 받는다.
+最初に要求されているコンテンツのヘッダを前に移動する必要が場合、ヘッダを移すために必要な部分を優先的にダウンロードされる。 非常にスマートなだけでなく高速に動作する。 カーテンの後ろの複雑なプロセスとは関係なく、クライアントはもともとヘッダが前にある完全なファイルをサービス受ける。
 
 .. note::
 
-   분석할 수 없거나 깨진 파일이라면 원본형태 그대로 서비스된다.
+   分析することができない場合、または壊れたファイルであれば、元の形のままサービスされる。
 
 
 .. _media-trimming:
@@ -269,9 +245,7 @@ MP4/M4A 헤더위치 변경
 Trimming
 ====================================
 
-시간 값을 기준으로 원하는 구간을 추출한다.
-Trimming은 전송단계에서만 발생할 뿐 원본의 형태를 변경하지 않는다.
-별도의 저장공간을 사용하지 않는다. ::
+時間値に基づいて必要な区間を抽出する。 Trimmingは送信段階でのみ発生するだけでテキストの形を変更しない。 別のストレージスペースを使用していない。 ::
 
    # server.xml - <Server><VHostDefault><Media>
    # vhosts.xml - <Vhosts><Vhost><Media>
@@ -282,67 +256,59 @@ Trimming은 전송단계에서만 발생할 뿐 원본의 형태를 변경하지
 
 -  ``<MP4Trimming>`` ``<MP3Trimming>`` ``<M4ATrimming>``
 
-   - ``OFF (기본)`` 아무 것도 하지 않는다.
+   - ``OFF (デフォルト)`` 何もしない。
 
-   - ``ON`` 확장자(.mp4, .mp3, .m4a)가 일치하면 원하는 구간만큼 서비스하도록 Trimming한다.
-     Trimming구간은 ``StartParam`` 속성과 ``EndParam`` 으로 설정한다.
+   - ``ON`` 拡張子(.mp4, .mp3, .m4a)が一致すると、必要な区間だけサービスするようにTrimmingする。 Trimming区間は ``StartParam`` 属性と ``EndParam`` に設定する。
 
-   - ``AllTracks`` 속성
+   - ``AllTracks`` 属性
 
-     - ``OFF (기본)`` Audio/Video 트랙만 Trimming한다. (Mod-H264 방식)
+     - ``OFF (デフォルト)`` Audio / VideoトラックのみTrimmingする。 （Mod-H264方式）
 
-     - ``ON`` 모든 트랙을 Trimming한다. 사용 전 반드시 플레이어 호환성을 확인해야 한다.
+     - ``ON`` すべてのトラックのTrimmingする。 使用前に必ずプレーヤーの互換性を確認しなければならない。
 
-파라미터는 클라이언트 QueryString을 통해 입력받는다.
-예를 들어 10분 분량의 동영상(/video.mp4)을 특정 구간만 Trimming하고 싶다면 QueryString에 원하는 시점(단위: 초)을 명시한다. ::
+パラメータは、クライアントQueryStringを介して入力される。 たとえば、10分の動画（/video.mp4）を特定区間だけTrimmingしたい場合はQueryStringに任意の時点（単位：秒）を指定する。 ::
 
-   http://vod.wineosoft.co.kr/video.mp4                // 10분 : 전체 동영상
-   http://vod.wineosoft.co.kr/video.mp4?end=60         // 1분 : 처음부터 60초까지
-   http://vod.wineosoft.co.kr/video.mp4?start=120      // 8분 : 2분(120초)부터 끝까지
-   http://vod.wineosoft.co.kr/video.mp4?start=3&end=13 // 10초 : 3초부터 13초까지
+   http://vod.wineosoft.co.kr/video.mp4                // 10分：全ムービー
+   http://vod.wineosoft.co.kr/video.mp4?end=60         // 1分：最初から60秒まで
+   http://vod.wineosoft.co.kr/video.mp4?start=120      // 8分：2分（120秒）から最後まで
+   http://vod.wineosoft.co.kr/video.mp4?start=3&end=13 // 10秒：3秒から13秒まで
 
-``StartParam`` 값이 ``EndParam`` 값보다 클 경우 구간이 지정되지 않은 것으로 판단한다.
-이 기능은 HTTP Pseudo-Streaming으로 구현된 동영상 플레이어의 Skip기능을 위해서 개발되었다.
-그러므로 Range요청을 처리하는 것처럼 파일을 Offset기반으로 자르지 않고 올바르게 재생될 수 있도록 키프레임과 시간을 인지하여 구간을 추출한다.
+``StartParam`` 値が ``EndParam`` 値よりも大きい場合、区間が指定されていないものと判断する。 この機能は、HTTP Pseudo-Streamingに実装されたビデオプレーヤーのSkip機能のために開発された。 したがって、Range要求を処理するようにファイルをOffsetに基づいて切らずに正常に再生されるように、キーフレームと時間を認知して区間を抽出する。
 
-클라이언트에게 전달되는 파일은 다음 그림처럼 MP4헤더가 재생성된 완전한 형태의 MP4파일이다.
+クライアントに配信されるファイルは、次の図のようにMP4ヘッダが再生成された完全な形のMP4ファイルである。
 
 .. figure:: img/conf_media_mp4trimming.png
    :align: center
 
-   완전한 형태의 파일이 제공된다.
+   完全な形のファイルが提供される。
 
-추출된 구간은 별도의 파일로 인식되기 때문에 200 OK로 응답된다.
-그러므로 다음과 같이 Range헤더가 명시된 경우 추출된 파일로부터 Range를 계산하여 **206 Particial Content** 로 응답한다.
+抽出された区間は、別のファイルとして認識されるため、200 OKで応答される。 したがって、次のようにRangeヘッダが記載されている場合、抽出されたファイルからRangeを計算して **206 Particial Content** で応答する。
 
 .. figure:: img/conf_media_mp4trimming_range.png
    :align: center
 
-   일반적인 Range요청처럼 처리된다.
+   一般的なRangeリクエストのように処理される。
 
-구간추출 파라미터가 QueryString 표현을 사용하기 때문에 자칫 :ref:`caching-policy-applyquerystring` 과 헷갈릴 수 있다.
-``<ApplyQueryString>`` 설정이 ``ON`` 인 경우 클라이언트가 요청한 URL의 QueryString이 모두 인식되지만 ``StartParam`` 과 ``EndParam`` 은 제거된다. ::
+区間抽出パラメータがQueryString表現を使用するため、ややもすると :ref:`caching-policy-applyquerystring` と混乱することができる。
+``<ApplyQueryString>`` の設定が ``ON`` の場合、クライアントが要求されたURLのQueryStringがすべて認識され ``StartParam`` と ``EndParam`` は除去される。 ::
 
    GET /video.mp4?start=30&end=100
    GET /video.mp4?tag=3277&start=30&end=100&date=20130726
 
-예를 들어 위와 같이 ``StartParam`` 이 **start** 로 ``EndParam`` 이 **end** 로 입력된 경우
-이 값들은 구간을 추출하는데 쓰일 뿐 Caching-Key를 생성하거나 원본서버로 요청을 보낼 때는 제거된다.
-각각 다음과 같이 인식된다. ::
+例えば上記のように ``StartParam`` が **start** で ``EndParam`` が **end** で入力された場合、この値は、区間を抽出するのに使われるだけでCaching-Keyを生成したり、元のサーバーに要求を送信する場合は削除される。 それぞれ次のように認識される。 ::
 
    GET /video.mp4
    GET /video.mp4?tag=3277&date=20130726
 
-또한 QueryString파라미터는 확장모듈이나 CDN솔루션에 따라 달라질 수 있다.
+また、QueryStringパラメータは、拡張モジュールやCDNソリューションによって異なることができる。
 
 .. figure:: img/conf_media_mp4trimming_range.png
    :align: center
 
-   JW Player에서 제공하고 있는 Module/CDN별 참고자료
+   JW Playerで提供しているModule / CDN星参考資料
 
-이외의 nginx의 `ngx_http_mp4_module <http://nginx.org/en/docs/http/ngx_http_mp4_module.html>`_ 과,
-lighttpd의 `Mod-H264-Streaming-Testing-Version2 <http://h264.code-shop.com/trac/wiki/Mod-H264-Streaming-Testing-Version2>`_ 에서도
-모두 **start** 를 QueryString으로 사용하고 있다.
+以外のnginxの `ngx_http_mp4_module <http://nginx.org/en/docs/http/ngx_http_mp4_module.html>`_ と、
+lighttpdの `Mod-H264-Streaming-Testing-Version2 <http://h264.code-shop.com/trac/wiki/Mod-H264-Streaming-Testing-Version2>`_ もすべて **start** をQueryStringに使用している。
 
 
 
@@ -351,14 +317,14 @@ lighttpd의 `Mod-H264-Streaming-Testing-Version2 <http://h264.code-shop.com/trac
 Multi-Trimming
 ====================================
 
-시간 값을 기준으로 복수로 지정된 구간을 하나의 영상으로 추출한다.
+時間値に基づいて、複数の指定された区間を一つの映像として抽出する。
 
 .. figure:: img/conf_media_multitrimming.png
    :align: center
 
    /video.mp4?trimming=0-30,210-270,525-555
 
-구간 지정방법만 다를뿐 동작방식은 `Trimming`_ 과 동일하다. ::
+区間の指定方法が違うだけで動作は `Trimming`_ と同じである。 ::
 
    # server.xml - <Server><VHostDefault><Media>
    # vhosts.xml - <Vhosts><Vhost><Media>
@@ -368,31 +334,29 @@ Multi-Trimming
 
 -  ``<MP4Trimming>`` ``<M4ATrimming>``
 
-   - ``MultiParam (기본: "trimming")``
-     설정된 이름을 QueryString Key로 사용하여 추출 구간을 지정한다.
-     하나의 구간은 "시작시간 - 종료시간" 으로 표기하며 각 구간은 콤마(,)로 연결한다.
+   - ``MultiParam (デフォルト: "trimming")``
+     に設定され名前をQueryString Keyとして使用して抽出区間を指定する。 一つの区間は "開始時刻 - 終了時刻" と表記し、各区間はコンマ（、）で接続する。
 
-   - ``MaxRatio (기본: 50%)``
-     Multi-Trimming된 영상은 원본보다 ``MaxRatio (최대 100%)`` 비율만큼까지 커질 수 있다.
-     ``MaxRatio`` 를 넘어가는 구간은 무시된다.
+   - ``MaxRatio (デフォルト: 50%)``
+     Multi-Trimmingされた映像は、オリジナルよりも ``MaxRatio (最大 100%)`` の割合だけまで大きくなることができる。
+     ``MaxRatio`` を移る区間は無視される。
 
 
-예를 들어 다음과 같이 호출하면 3분짜리 영상이 생성된다. ::
+例えば、次のように起動すると、3分の映像が生成される。 ::
 
    http://example.com/video.mp4?trimming=10-70,560-620,1245-1305
 
-같은 영상을 반복하거나 앞 뒤가 바뀐 영상을 만들 수도 있다. ::
+同じ映像を繰り返したり、前の背部変わった映像を作成することもできる。 ::
 
    http://example.com/video.mp4?trimming=17-20,17-20,17-20,17-20
    http://example.com/video.mp4?trimming=1000-1200,500-623,1900-2000
    http://example.com/video.mp4?trimming=600-,400-600
 
-구간 값을 지정하지 않은 경우 맨 앞 또는 맨 뒤를 의미한다.
+区間値を指定しない場合先頭または最後に意味する。
 
 
 .. note::
 
-   `Multi-Trimming`_ 은 `Trimming`_ 보다 우선한다.
-   QueryString에 `Multi-Trimming`_ 키가 명시되어 있다면 `Trimming`_ 키는 무시된다.
+   `Multi-Trimming`_ は `Trimming`_ より優先する。 QueryStringに `Multi-Trimming`_ キーが明示されている場合は `Trimming`_ キーは無視される。
 
 
