@@ -172,10 +172,10 @@ Format 変更
 ================ ===================== =================
 反転               invert                true または false
 グレースケール        grayscale            true または false
-反転            flipflop             vertical
-明るさの調整            bright                0 ~ 100
-回転               rotate                0 ~ 360 (度)
-セピア              sepia                 0 ~ 1
+反転             flipflop             vertical
+明るさの調整        bright                0 ~ 100
+回転              rotate                0 ~ 360 (度)
+セピア            sepia                 0 ~ 1
 角ラウンド        round                 0 ~ 90
 ================ ===================== =================
 
