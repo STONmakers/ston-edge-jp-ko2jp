@@ -1,6 +1,6 @@
 ﻿.. _filesystem:
 
-第18章 File System
+第19章 File System
 ******************
 
 この章では、STONをローカルディスクのように使用する方法について説明する。 STONは `FUSE <http://fuse.sourceforge.net/>`_ をベースにLinux VFS（Virtual File System）でMountされる。 Mountされたパスのすべてのファイルは、アクセスされた瞬間Cachingますが、他のプロセスは、この事実を知らない。
