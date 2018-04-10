@@ -155,16 +155,15 @@ GeoIPが設定されている場合は、そのディレクトリに保存され
 
    $URL[...]で表記し省略が可能である。 明確な表現とパターンを認識する。
 
-$は "条件に合うなら〜する"を意味するが、！は "条件に合わない場合は〜する"を意味する。
-次のように否定条件で支援する。 ::
+$は "条件に合うなら〜する"を意味するが、！は "条件に合わない場合は〜する"を意味する。 次のように否定条件で支援する。 ::
 
-   # 国がJPNがない場合はdenyする。
+   # 国がJPNではない場合はdenyする。
    !IP[JPN], deny
 
    # refererヘッダが存在しない場合denyする。
    !HEADER[referer], deny
 
-   # /secure/ パスサブがない場合はallowする。
+   # /secure/ 経路の以下ではない場合はallowする。
    !URL[/secure/*], allow
 
 
@@ -174,11 +173,11 @@ $は "条件に合うなら〜する"を意味するが、！は "条件に合�
 Redirect
 ---------------------
 
-すべてのクライアントのHTTP要求に対してRedirectかどうかを設定する。 Redirectされた要求には、 **302 Moved temporarily** で応答する。 ::
+すべてのクライアントのHTTP要求に対してRedirect有無を設定する。 Redirectされた要求には、 **302 Moved temporarily** で応答する。 ::
 
    # /svc/www.example.com/acl.txt
    # 区切り文字はカンマ（、）であり、{条件}、{redirect}順に表記する。
-   # redirectの場合、キーワードの後に​​移動させるURLを指定する。 (Locationヘッダの値に明示)
+   # redirectの場合、キーワードの後に移動させるURLを指定する。 (Locationヘッダの値に明示)
 
    $IP[GIN], redirect, /page/illegal_access.html
    $HEADER[referer:], redirect, http://another-site.com
