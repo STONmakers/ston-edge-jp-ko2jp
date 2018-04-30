@@ -100,6 +100,22 @@ URL前処理
    // Pattern : example.com/video.mp4_10_20
    // Replace : example.com/example.com/video.mp4_10_20/video.mp4/10/20
 
+.. note::
+
+   次のように類似したサブドメインがある場合は注意しなければならない。 ::
+   
+      image.example.com
+      myimage.example.com
+      
+   正規表現では、image.exampe.comにパターンを作成した場合myimage.example.comもパターンと一致するものとみなされる。
+   これを防止するために、先頭に文字なしを ``^`` で表記ヘジュオヤimage.example.comのみマッチングさせることができる。 ::
+
+      <URLRewrite>
+         <Pattern>^image.example.com/img/(.*\.(jpg|png).*)</Pattern>
+         <Replace>image.example.com/#1/STON/composite/watermark1</Replace>
+      </URLRewrite>
+      
+
 パターンの表現にXMLの5つの特殊文字（ "＆" <>）が入る場合は、<！[CDATA [... ]]>で囲んで正しく設定されている。
 :ref:`wm` を使用して設定すると、すべてのパターンはCDATAとして処理される。
 
