@@ -112,7 +112,7 @@ BTの条件のリストを設定する。 条件のリストと一致する必�
 
 メディアファイル（MP4、M4A、MP3）を分析すると、Encoding RateからBandwidthを得ることができる。 アクセスされるコンテンツの拡張子は必ず.mp4、.m4a、.mp3のいずれかでなければならない。 動的にBandwidthを抽出するには、次のようにBandwidth後ろ **x** を付ける。 ::
 
-   # /vod/*.mp4 ファイルへのアクセスであれば、bandwidthデーターを所得、取得できない場合は、 1000を bandwidthbandwidthに使用する。
+   # /vod/*.mp4 ファイルへのアクセスであれば、bandwidthデーターを所得、取得できない場合は、 1000を bandwidthに使用する。
    $URL[/vod/*.mp4], 1000x, 120, 5
 
    # user-agentヘッダがない場合は、 bandwidthデーターを所得、取得できない場合は、 500をbandwidthに使用する。
