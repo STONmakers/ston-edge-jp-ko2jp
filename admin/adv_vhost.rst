@@ -107,8 +107,7 @@ URL前処理
       image.example.com
       myimage.example.com
       
-   正規表現では、image.exampe.comにパターンを作成した場合myimage.example.comもパターンと一致するものとみなされる。 
-   これを防止するために、先頭に文字なしを ``^`` で表記ヘジュオヤimage.example.comのみマッチングさせることができる。 ::
+   正規表現では、image.exampe.comにパターンを作成した場合myimage.example.comもパターンと一致するものとみなされる。 これを防止するために、先頭に文字なしを ``^`` で表記ヘジュオヤimage.example.comのみマッチングさせることができる。 ::
 
       <URLRewrite>
          <Pattern>^image.example.com/img/(.*\.(jpg|png).*)</Pattern>
