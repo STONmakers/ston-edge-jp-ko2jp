@@ -122,7 +122,7 @@ Thumbnailを生成する。
 例えば、 **/thumbnail/100/** は横幅に合わせて縦サイズが決定され、
 **/thumbnail/x200/** は、縦サイズに合わせて横幅が決定される。 水平/垂直サイズを画像のサイズに合わせて割合（％）で表現することができる。 画像のサイズを増やすには、100よりも大きい値（例えば、125％）を使用する。 画像のサイズを小さくするには、100未満の割合を使用する。 URL Encodingルールに基づいて％の文字が％25にエンコードされることを覚えておかなければならない。
 
-例えば、50％という表現は、50％、25でエンコードされる。 以下は、width = 78、height = 110サイズのThumbnailを生成する例である。 ::
+例えば、50％という表現は、50％25でエンコードされる。 以下は、width = 78、height = 110サイズのThumbnailを生成する例である。 ::
 
    http://image.example.com/img.jpg/dims/thumbnail/78x110/
 
@@ -148,8 +148,7 @@ Format 変更
 ====================================
 
 画像フォーマットを変更する。
-サポートされるフォーマットは、 "png", "jpg", "gif" である。
- 以下は、JPGをPNGへ変換する例である。 ::
+サポートされるフォーマットは、 "png", "jpg", "gif" である。以下は、JPGをPNGへ変換する例である。 ::
 
    http://image.example.com/img.jpg/dims/format/png/
 
@@ -172,7 +171,7 @@ Format 変更
 ================ ===================== =================
 反転             invert                 true または false
 グレースケール   grayscale             true または false
-反転             flipflop              vertical
+反転             flipflop              vertical または horizontal
 明るさの調整     bright                0 ~ 100
 回転             rotate                0 ~ 360 (度)
 セピア           sepia                 0 ~ 1
