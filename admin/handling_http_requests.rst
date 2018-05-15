@@ -28,17 +28,16 @@ HTTPクライアントがサーバー（STON）に接続すると、HTTPセッ�
    <ClientKeepAliveSec>10</ClientKeepAliveSec>
    <KeepAliveHeader Max="0">ON</KeepAliveHeader>
 
--  ``<ConnectionHeader> (基本: keep-alive)``
+-  ``<ConnectionHeader> (デフォルト: keep-alive)``
    クライアントに送信するHTTPレスポンスのConnectionヘッダ( ``keep-alive`` または ``close`` )を設定する。
 
-
--  ``<ClientKeepAliveSec> (基本: 10秒)``
+-  ``<ClientKeepAliveSec> (デフォルト: 10秒)``
    クライアントセッションとは何の通信がない状態で設定された時間が経過すると、セッションを終了する。 時間を長すぎる設定すると、通信をしていないセッションが過度に多くなる。 あまりにも多くのセッションを維持するだけでも、システムは負荷となる。
 
 -  ``<KeepAliveHeader>``
 
-   - ``ON (基本)`` HTTP応答にKeep-Aliveヘッダを明示する。
-     ``Max (基本: 0)`` を0より大きく設定すると、Keep-Aliveヘッダの値に ``Max`` 値が明示される。 以後HTTPトランザクションが発生するたびに1ずつ減算される。
+   - ``ON (デフォルト)`` HTTP応答にKeep-Aliveヘッダを明示する。
+     ``Max (デフォルト: 0)`` を0より大きく設定すると、Keep-Aliveヘッダの値に ``Max`` 値が設定される。 以後HTTPトランザクションが発生するたびに1ずつ減算される。
 
    - ``OFF`` HTTP応答にKeep-Aliveヘッダを省略する。
 
@@ -46,15 +45,15 @@ HTTPクライアントがサーバー（STON）に接続すると、HTTPセッ�
 HTTPセッションを維持ポリシー
 ---------------------
 
-STONはなるべくApacheのポリシーに従う。 特にセッション維持ポリシーは、HTTPヘッダーの値に応じた変数が多い。 HTTPセッションを維持政策に影響を与える要素は次のとおりである。
+STONはなるべくApacheのポリシーに従う。 特にセッション維持ポリシーは、HTTPヘッダーの値に応じた変数が多い。 HTTPセッションを維持政策に影響を与える要素は次のとおりです。
 
-- クライアントのHTTP要求に指定されたConnectionヘッダ（ "Keep-Alive"または "Close"）
+- クライアントのHTTP要求に指定されたConnectionヘッダ（"Keep-Alive" または "Close"）
 - 仮想ホスト ``<Connection>`` 設定
 - 仮想ホストセッションKeep-Alive時間設定
 - 仮想ホスト ``<Keep-Alive>`` 設定
 
 
-1. クライアントのHTTP要求に "Connection: Close"に明示されている場合、 ::
+1. クライアントのHTTP要求に "Connection: Close" に設定されている場合、 ::
 
       GET / HTTP/1.1
       ...(省略)...
