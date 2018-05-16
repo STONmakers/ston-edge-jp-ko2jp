@@ -3,11 +3,11 @@
 第11章 SNMP
 ******************
 
-この章では、SNMP（Simple Network Management Protocol）について説明します。
-:ref:`monitoring_stats` のすべての数値は、SNMPでさらに細分化された時間の単位とシステムの状態情報まで提供する。 仮想ホストごとにリアルタイムの統計情報と、最大60分までで "分" 単位の平均統計を提供する。
+この章ではSNMP（Simple Network Management Protocol）について説明します。
+:ref:`monitoring_stats` のすべての数値はSNMPでさらに細分化された時間の単位とシステムの状態情報まで提供します。 仮想ホストごとにリアルタイムの統計情報と最大60分まで "分" 単位の平均統計を提供します。
 
 - 別のパッケージが必要ない。
-- snmpdを個別に実行していない。
+- snmpdを個別に実行しません。
 - SNMP v1およびv2cをサポートします。
 
 .. toctree::
@@ -19,11 +19,11 @@
 変数
 ====================================
 
-設定やユーザーの意図によって変更されることができる値を[変数名]に指定する。 たとえば、ディスクは複数が存在することができる。 この場合、各ディスクを指す一意の番号が必要であり、入力された順に1から割り当てられる。 このような変数を ``[diskIndex]`` で指定する。
+設定やユーザーの意図によって変更されることができる値を[変数名]に指定します。 たとえばディスクは複数が存在することができます。 この場合各ディスクを指す一意の番号が必要であり入力された順に1から割り当てられる。 このような変数を ``[diskIndex]`` で指定します。
 
 -  ``[diskIndex]``
 
-   Storageに設定されたディスクを意味する。 ::
+   Storageに設定されたディスクを意味します。 ::
 
       # server.xml - <Server><Cache>
 
@@ -33,12 +33,12 @@
          <Disk>/cache3</Disk>
       </Storage>
 
-   上記のように3つのディスクが設定された環境では、/ cache1の
-   ``[diskIndex]`` は1、/ cache3の ``[diskIndex]`` は3を有する。 例えば、/ cache1の全容量に対応するOIDはsystem.diskInfo.diskInfoTotalSize.1（1.3.6.1.4.1.40001.1.2.18.1.3）1となる。 最後.1は最初のディスクを意味する。
+   上記のように3つのディスクが設定された環境では/ cache1の
+   ``[diskIndex]`` は1/ cache3の ``[diskIndex]`` は3を有します。 例えば/ cache1の全容量に対応するOIDはsystem.diskInfo.diskInfoTotalSize.1（1.3.6.1.4.1.40001.1.2.18.1.3）1となる。 最後.1は最初のディスクを意味します。
 
 -  ``[vhostIndex]``
 
-   仮想ホストがロードされるときに自動的に付与される。 ::
+   仮想ホストがロードされるときに自動的に付与されます。 ::
 
       # vhosts.xml
 
@@ -48,20 +48,20 @@
          <Vhost Status="Active" Name="park.com" StaticIndex="10300"> ... </Vhost>
       </Vhosts>
 
-   最初、上記のよう3つの仮想ホストがロードされると、1から順番に  ``[vhostIndex]`` が付与される。 以降、仮想ホストは、  ``[vhostIndex]`` を記憶し、仮想ホストが削除されても  ``[vhostIndex]`` は変わらない。 仮想ホストの削除と追加が同時に発生した場合、削除は、最初に動作し、新規追加された仮想ホストは、空の  ``[vhostIndex]`` を与えられる。
+   最初上記のよう3つの仮想ホストがロードされると1から順番に ``[vhostIndex]`` が付与されます。 以降仮想ホストは  ``[vhostIndex]`` を記憶し仮想ホストが削除されても ``[vhostIndex]`` は変わらない。 仮想ホストの削除と追加が同時に発生した場合削除は最初に動作し新規追加された仮想ホストは空の  ``[vhostIndex]`` を与えられる。
 
    .. figure:: img/snmp_vhostindex.png
       :align: center
 
       ``[vhostIndex]`` の動作
 
--  ``[diskMin]`` , ``[vhostMin]``
+-  ``[diskMin]`` 、 ``[vhostMin]``
 
-   時間（分）を意味する。 5は、5分の平均を意味し、60は60分の平均を意味する。 この値は、1（分）から60（分）までの範囲を持ち、0は、リアルタイム（1秒）のデータを意味する。
+   時間（分）を意味します。 5は5分の平均を意味し60は60分の平均を意味します。 この値は1（分）から60（分）までの範囲を持ち0はリアルタイム（1秒）のデータを意味します。
 
-SNMPは、動的に値が変わることができる項目についてTable構造を使用する。 たとえば、「ディスク全体のサイズ」は、ディスクの数に応じて提供するデータ数が変わるため、Table構造を使用して表現しなければならない。 STONは、すべての仮想ホストに対して「分」単位の統計情報を提供する。 したがって、 ``[vhostMin]`` . ``[vhostIndex]`` という多少難解な表現を提供する。
+SNMPは動的に値が変わることができる項目についてTable構造を使用します。 たとえば「ディスク全体のサイズ」はディスクの数に応じて提供するデータ数が変わるためTable構造を使用して表現する必要があります。 STONはすべての仮想ホストに対して「分」単位の統計情報を提供します。 したがって ``[vhostMin]`` . ``[vhostIndex]`` という多少難解な表現を提供します。
 
-この表現は、仮想ホストごとに必要な "分" 単位の統計情報を見ることができる利点を持っているが、変数が2つなので、Table構造で表現するのは難しいという短所がある。 このような問題を克服するために  ``[vhostMin]`` のデフォルト値を設定して、SNMPWalkが動作できるようにする。
+この表現は仮想ホストごとに必要な "分" 単位の統計情報を見ることができる利点を持っているが変数が2つなのでTable構造で表現するのは難しいという短所があります。 このような問題を克服するために ``[vhostMin]`` のデフォルト値を設定してSNMPWalkが動作できるようにします。
 
 
 .. _snmp-conf:
@@ -69,7 +69,7 @@ SNMPは、動的に値が変わることができる項目についてTable構�
 有効
 ====================================
 
-グローバル設定（server.xml）を介してSNMP動作とACLを設定する。 ::
+グローバル設定（server.xml）を介してSNMP動作とACLを設定します。 ::
 
    # server.xml - <Server><Host>
 
@@ -78,35 +78,35 @@ SNMPは、動的に値が変わることができる項目についてTable構�
       <Allow>192.168.6.0/24</Allow>
    </SNMP>
 
--  ``<SNMP>`` プロパティを介してSNMPの動作を設定する。
+-  ``<SNMP>`` プロパティを介してSNMPの動作を設定します。
 
-   - ``Port (基本: 161)`` SNMPサービスポート
+   - ``Port (デフォルト: 161)`` SNMPサービスポート
 
-   - ``Status (基本: Inactive)`` SNMPを有効にするには、この値を ``Active`` に設定する。
+   - ``Status (デフォルト: Inactive)`` SNMPを有効にするにはこの値を ``Active`` に設定します。
 
--  ``<Allow>`` SNMPアクセスを許可するIPアドレスを設定する。
-    IPの指定、IPアドレスの範囲を指定、ビットマスク、サブネット上四つの形式をサポートします。 接続したソケットが許可されたIPアドレスがなければ、応答を与えない。
+-  ``<Allow>`` SNMPアクセスを許可するIPアドレスを設定します。
+    IPの指定、IPアドレスの範囲を指定、ビットマスク、サブネット上四つの形式をサポートします。 接続したソケットが許可されたIPアドレスがなければ応答を与えない。
 
 
 
 仮想ホスト/ View変数
 ====================================
 
-SNMPを介して提供される仮想ホスト/ View数と基本時間（分）を設定する。 ::
+SNMPを介して提供される仮想ホスト/ View数とデフォルト時間（分）を設定します。 ::
 
    # server.xml - <Server><Host>
 
    <SNMP VHostCount=0, VHostMin=5 ViewCount=0, ViewMin=5 />
 
--  ``VHostCount (基本: 0)`` 0の場合、存在する仮想ホストまでの応答をする。 0よりも大きい値である場合は、仮想ホストの存在の有無に関係なく、設定された仮想ホストまでの応答である。
+-  ``VHostCount (デフォルト: 0)`` 0の場合存在する仮想ホストまでの応答をします。 0よりも大きい値である場合は仮想ホストの存在の有無に関係なく設定された仮想ホストまでの応答です。
 
--  ``ViewCount (基本: 0)`` Viewに適用します。 ( ``VHostCount`` と同じ)
+-  ``ViewCount (デフォルト: 0)`` Viewに適用します。 ( ``VHostCount`` と同じ)
 
--  ``VHostMin (基本: 5分, 最大: 60分)``  ``[vhostMin]``  の値を設定する。 0〜60までの値を有する。 0の場合、リアルタイムのデータを提供して、1〜60の間である場合は、その分だけの平均値を提供する。
+-  ``VHostMin (デフォルト: 5分, 最大: 60分)``  ``[vhostMin]``  の値を設定します。 0〜60までの値を有します。 0の場合リアルタイムのデータを提供して1〜60の間である場合はその分だけの平均値を提供します。
 
--  ``ViewMin (基本: 0)`` Viewに適用します。 ( ``VHostMin`` と同じ)
+-  ``ViewMin (デフォルト: 0)`` Viewに適用します。 ( ``VHostMin`` と同じ)
 
-たとえば、3つの仮想ホストが設定されている環境でSNMPWalkの動作が変わる。
+たとえば3つの仮想ホストが設定されている環境でSNMPWalkの動作が変わります。
 
 - VHostCount=0の場合 ::
 
@@ -127,24 +127,24 @@ SNMPを介して提供される仮想ホスト/ View数と基本時間（分）�
 その他の変数
 ---------------------
 
-その他の変数を設定する。 ::
+その他の変数を設定します。 ::
 
    # server.xml - <Server><Host>
 
    <SNMP GlobalMin="5" DiskMin="5" ConfCount="10" />
 
--  ``GlobalMin (基本: 5分, 最大: 60分)``  ``[globalMin]``  の値を設定する。
+-  ``GlobalMin (デフォルト: 5分, 最大: 60分)``  ``[globalMin]``  の値を設定します。
 
--  ``DiskMin (基本: 5分, 最大: 60分)``  ``[diskMin]``  の値を設定する。
+-  ``DiskMin (デフォルト: 5分, 最大: 60分)``  ``[diskMin]``  の値を設定します。
 
--  ``ConfCount (基本: 10)`` 設定のリストをn個まで閲覧する。 1〜100の間で指定可能である。 1は、現在の反映の設定を意味し、2は、以前の設定を意味する。 100は、現在を基準に99回前の設定を意味する。
+-  ``ConfCount (デフォルト: 10)`` 設定のリストをn個まで閲覧します。 1〜100の間で指定可能です。 1は現在の反映の設定を意味し2は以前の設定を意味します。 100は現在を基準に99回前の設定を意味します。
 
 
 
 Community
 ====================================
 
-Communityを設定して、許可されたOIDのみアクセス/ブロックするように設定する。 ::
+Communityを設定して許可されたOIDのみアクセス/ブロックするように設定します。 ::
 
    # server.xml - <Server><Host>
 
@@ -159,16 +159,16 @@ Communityを設定して、許可されたOIDのみアクセス/ブロックす�
       </Community>
    </SNMP>
 
-``<SNMP>`` の ``UnregisteredCommunity`` を "Deny"に設定すると、登録されていないCommunity要求は遮断する。
+``<SNMP>`` の ``UnregisteredCommunity`` を "Deny"に設定すると登録されていないCommunity要求は遮断します。
 
--  ``<Community>`` Communityを設定する。
+-  ``<Community>`` Communityを設定します。
 
    - ``Name`` Community 名。
 
-   - ``OID (基本: Allow)`` サブ ``<OID>`` タグの値を設定する。 属性値が ``Allow`` であれば、サブ ``<OID>`` リストのみがアクセス可能である。 逆に属性値が ``Deny`` であれば、サブ<OID>リストには、アクセスが不可能である。
+   - ``OID (デフォルト: Allow)`` サブ ``<OID>`` タグの値を設定します。 属性値が ``Allow`` であればサブ ``<OID>`` リストのみがアクセス可能です。 反対に属性値が ``Deny`` であればサブ<OID>リストにはアクセスが不可能です。
 
 
-明示的なOID（1.3.6.1.4.1.40001.1.4.4）と範囲（OID 1.3.6.1.4.1.40001.1.4.3.1.11.11.10.1-61）表現が可能である。 OIDを許可/遮断する場合は、サブすべてのOIDに対して同じルールが適用される。
+明示的なOID（1.3.6.1.4.1.40001.1.4.4）と範囲（OID 1.3.6.1.4.1.40001.1.4.3.1.11.11.10.1-61）表現が可能です。 OIDを許可/遮断する場合はサブすべてのOIDに対して同じルールが適用されます。
 
 
 
@@ -181,7 +181,7 @@ meta
 
    OID = 1.3.6.1.4.1.40001.1.1
 
-メタ情報を提供する。
+メタ情報を提供します。
 
 ===== ============= ========= ===========================================
 OID   Name          Type      Description
@@ -208,14 +208,14 @@ meta.conf
    OID = 1.3.6.1.4.1.40001.1.1.10
 
 ``[confIndex]`` は ``<SNMP>`` の ``ConfCount`` 属性で設定します。
-``[confIndex]`` が1の場合は、常に現在適用され設定値を、2の場合は、以前の設定値を意味する。 10であれば、現在の（1）から9の前の設定を意味する。
+``[confIndex]`` が1の場合は常に現在適用され設定値を2の場合は以前の設定値を意味します。 10であれば現在の（1）から9の前の設定を意味します。
 
 ==================== ======= ======= =============================================================================================
 OID                  Name    Type    Description
 ==================== ======= ======= =============================================================================================
 .1. ``[confIndex]``  ID      Integer 設定ID
 .2. ``[confIndex]``  Time    Integer 設定時間（Unix時間）
-.3. ``[confIndex]``  Type    Integer 設定モード (0 = Unknown, 1 = STON 開始, 2 = /conf/reload, 3 = /conf/upload, 4 = /conf/restore)
+.3. ``[confIndex]``  Type    Integer 設定モード (0 = Unknown、 1 = STON 開始、 2 = /conf/reload、 3 = /conf/upload、 4 = /conf/restore)
 .4. ``[confIndex]``  Size    Integer 設定ファイルサイズ
 .5. ``[confIndex]``  Hash    String  設定ファイルHashの文字列
 .6. ``[confIndex]``  Path    String  設定ファイルの保存パス
@@ -233,8 +233,8 @@ system
 
    OID = 1.3.6.1.4.1.40001.1.2
 
-STONが動作するシステムの情報を提供する。
-``[sysMin]`` 変数は、0〜60分までの値を持ち、リアルタイムまたは必要な時間だけの平均値を提供する。 SNMPWalkで  ``[sysMin]`` は0に設定され、現在の情報を提供する。
+STONが動作するシステムの情報を提供します。
+``[sysMin]`` 変数は0〜60分までの値を持ちリアルタイムまたは必要な時間だけの平均値を提供します。 SNMPWalkで  ``[sysMin]`` は0に設定され現在の情報を提供します。
 
 =================== ========================================= ======= ===============================================
 OID                 Name                                      Type    Description
@@ -293,7 +293,7 @@ system.diskInfo
 
    OID = 1.3.6.1.4.1.40001.1.2.18.1
 
-ディスクの情報を提供する。
+ディスクの情報を提供します。
 
 ======================= ================== =========== =========================================
 OID                     Name               Type        Description
@@ -318,7 +318,7 @@ system.diskPerf
 
    OID = 1.3.6.1.4.1.40001.1.2.19.1
 
-ディスクパフォーマンスの状態を提供する。
+ディスクパフォーマンスの状態を提供します。
 
 ======================================== =========================== ========== ===============================
 OID                                      Name                        Type       Description
@@ -347,7 +347,7 @@ global
 
    OID = 1.3.6.1.4.1.40001.1.3
 
-STONのすべてのモジュールが共通で使用するリソース情報（ソケット、イベントなど）を提供する。
+STONのすべてのモジュールが共通で使用するリソース情報（ソケット、イベントなど）を提供します。
 
 -  **ServerSocket**
 
@@ -355,13 +355,13 @@ STONのすべてのモジュールが共通で使用するリソース情報（�
 
 -  **ClientSocket**
 
-   STON〜ソースサーバー区間。 STONが元のサーバーに要求を送信する目的で使用されるソケット
+   STON〜オリジンサーバー区間。 STONがオリジンサーバーに要求を送信する目的で使用されるソケット
 
 ===== =========================================== ========== ==================================================
 OID   Name                                        Type       Description
 ===== =========================================== ========== ==================================================
 .5    EQ. ``[globalMin]``                         Integer    STON Frameworkでまだ処理されていないEvent数
-.6    RQ. ``[globalMin]``                         Integer    最近サービスされたコンテンツを参照キューに格納されたEvent数
+.6    RQ. ``[globalMin]``                         Integer    最近サービスされたコンテンツを参照キューに保存されたEvent数
 .7    waitingFiles2Write. ``[globalMin]``         Integer    書き込み待機中のファイルの数
 .10   ServerSocket.Total. ``[globalMin]``         Integer    サーバー全体のソケット数
 .11   ServerSocket.Established. ``[globalMin]``   Integer    接続された状態のサーバソケット数
@@ -386,7 +386,7 @@ cache
 
     OID = 1.3.6.1.4.1.40001.1.4
 
-キャッシュサービスの統計情報は、仮想ホストごとに詳細に収集/提供される。
+キャッシュサービスの統計情報は仮想ホストごとに詳細に収集/提供されます。
 
 ====== ============== ========= ============================================================
 OID    Name           Type      Description
@@ -394,10 +394,10 @@ OID    Name           Type      Description
 .1     host           OID       ホスト（拡張)
 .2     vhostCount     Integer   仮想ホストの数
 .3.1   vhost          OID       仮想ホスト別の統計
-.4     vhostIndexMax  Integer    ``[vhostIndex]``  最大値。 SNMPWalkはこの数値を基準に動作する。
+.4     vhostIndexMax  Integer    ``[vhostIndex]``  最大値。 SNMPWalkはこの数値を基準に動作します。
 .10    viewCount      Integer   View数
 .11.1  view           OID       View別統計
-.12    viewIndexMax   Integer   [viewIndex] 最大値。 SNMPWalkはこの数値を基準に動作する。
+.12    viewIndexMax   Integer   [viewIndex] 最大値。 SNMPWalkはこの数値を基準に動作します。
 ====== ============== ========= ============================================================
 
 
@@ -411,7 +411,7 @@ cache.host
 
    OID = 1.3.6.1.4.1.40001.1.4.1
 
-ホスト（=すべての仮想ホスト）の情報を提供する。
+ホスト（=すべての仮想ホスト）の情報を提供します。
 
 ===== ========= =========== =========================
 OID   Name      Type        Description
@@ -434,7 +434,7 @@ cache.host.contents
 
    OID = 1.3.6.1.4.1.40001.1.4.1.10
 
-ホスト（=すべての仮想ホスト）がサービスするコンテンツ情報を提供する。
+ホスト（=すべての仮想ホスト）がサービスするコンテンツ情報を提供します。
 
 ====== ================ ========== ============================
 OID    Name             Type       Description
@@ -481,7 +481,7 @@ cache.host.traffic
 
    OID = 1.3.6.1.4.1.40001.1.4.1.11
 
-ホスト（=すべての仮想ホスト）のキャッシュサービスとトラフィックの統計情報を提供する。 trafficのすべての統計情報は、最大60分までの平均で提供する。 minは、 '分'を意味し、最大60までの値を有する。 minが省略されたり0であれば、リアルタイムの情報を提供する。
+ホスト（=すべての仮想ホスト）のキャッシュサービスとトラフィックの統計情報を提供します。 trafficのすべての統計情報は最大60分までの平均で提供します。 minは '分'を意味し最大60までの値を有します。 minが省略されたり0であればリアルタイムの情報を提供します。
 
 ===================== =============== ======= ==============================
 OID                   Name            Type    Description
@@ -490,7 +490,7 @@ OID                   Name            Type    Description
 .2. ``[vhostMin]``                            Request Hit Ratio(10000%)
 .3. ``[vhostMin]``    bytesHitRatio   Integer Bytes Hit Ratio(100%)
 .4. ``[vhostMin]``                            Bytes Hit Ratio(10000%)
-.10                   origin          OID     元のトラフィック情報（拡張）
+.10                   origin          OID     オリジントラフィック情報（拡張）
 .11                   client          OID     クライアントのトラフィック情報（拡張）
 ===================== =============== ======= ==============================
 
@@ -505,73 +505,73 @@ cache.host.traffic.origin
 
     OID = 1.3.6.1.4.1.40001.1.4.1.11.10
 
-ソースサーバートラフィックの統計情報を提供する。 ソースサーバーのトラフィックは、HTTPトラフィックとPortバイパストラフィックに区分する。
+オリジンサーバートラフィックの統計情報を提供します。 オリジンサーバーのトラフィックはHTTPトラフィックとPortバイパストラフィックに区分します。
 
 ========================== =================================== ========== ===================================================================
 OID                        Name                                Type       Description
 ========================== =================================== ========== ===================================================================
-.1. ``[vhostMin]``         inbound                             Integer    ソースサーバーから受信し、平均トラフィック(Bytes)
-.2. ``[vhostMin]``         outbound                            Integer    ソースサーバーに送信平均トラフィック(Bytes)
-.3. ``[vhostMin]``         sessionAverage                      Integer    全体元のサーバーの平均セッション数
-.4. ``[vhostMin]``         activesessionAverage                Integer    全体元のサーバーセッションの中で送信されているセッションの平均数 
-.10                        http                                OID        ソースサーバーのHTTPトラフィック情報
-.10.1. ``[vhostMin]``      http.inbound                        Integer    ソースサーバーから受信し、平均のHTTPトラフィック(Bytes)
-.10.2. ``[vhostMin]``      http.outbound                       Integer    ソースサーバーに送信平均HTTPトラフィック(Bytes)
-.10.3. ``[vhostMin]``      http.sessionAverage                 Integer    ソースサーバーの平均HTTPセッション数
-.10.4. ``[vhostMin]``      http.reqHeaderSize                  Integer    ソースサーバーに送信平均HTTP Headerトラフィック(Bytes)
-.10.5. ``[vhostMin]``      http.reqBodySize                    Integer    ソースサーバーに送信平均HTTP Bodyトラフィック(Bytes)
-.10.6. ``[vhostMin]``      http.resHeaderSize                  Integer    ソースサーバーから受信し、平均HTTP Headerトラフィック(Bytes)
-.10.7. ``[vhostMin]``      http.resBodySize                    Integer    ソースサーバーから受信し、平均HTTP Bodyトラフィック(Bytes)
-.10.8. ``[vhostMin]``      http.reqAverage                     Integer    ソースサーバーに送信される平均HTTPリクエスト数
-.10.9. ``[vhostMin]``      http.reqCount                       Integer    ソースサーバーに送信されるHTTPリクエスト数
-.10.10. ``[vhostMin]``     http.resTotalAverage                Integer    ソースサーバーが送信した全体の平均HTTP応答数
-.10.11. ``[vhostMin]``     http.resTotalCompleteAverage        Integer    ソースサーバーから成功した平均HTTPトランザクション数
-.10.12. ``[vhostMin]``     http.resTotalTimeRes                Integer    元のサーバーからの応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.13. ``[vhostMin]``     http.resTotalTimeComplete           Integer    ソースサーバーからの応答HTTP Transaction平均完了時間(0.01ms)
-.10.14. ``[vhostMin]``     http.resTotalCount                  Integer    ソースサーバーが送信した完全なHTTP応答数
-.10.15. ``[vhostMin]``     http.resTotalCompleteCount          Integer    ソースサーバーから成功したHTTPトランザクション数
-.10.20. ``[vhostMin]``     http.res2xxAverage                  Integer    ソースサーバーが送信した平均2xx応答数
-.10.21. ``[vhostMin]``     http.res2xxCompleteAverage          Integer    ソースサーバーから成功した平均2xxトランザクション数
-.10.22. ``[vhostMin]``     http.res2xxTimeRes                  Integer    ソースサーバーから2xxレスポンスヘッダを受信するまでの平均所要時間(0.01ms)
-.10.23. ``[vhostMin]``     http.res2xxTimeComplete             Integer    ソースサーバーから2xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.24. ``[vhostMin]``     http.res2xxCount                    Integer    ソースサーバーが送信した2xx応答数
-.10.25. ``[vhostMin]``     http.res2xxCompleteCount            Integer    ソースサーバーから成功した2xxトランザクション数
-.10.30. ``[vhostMin]``     http.res3xxAverage                  Integer    ソースサーバーが送信した平均3xx応答数
-.10.31. ``[vhostMin]``     http.res3xxCompleteAverage          Integer    ソースサーバーから成功した平均3xxトランザクション数
-.10.32. ``[vhostMin]``     http.res3xxTimeRes                  Integer    ソースサーバーから3xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.33. ``[vhostMin]``     http.res3xxTimeComplete             Integer    ソースサーバーから3xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.34. ``[vhostMin]``     http.res3xxCount                    Integer    ソースサーバーが送信した3xx応答数
-.10.35. ``[vhostMin]``     http.res3xxCompleteCount            Integer    ソースサーバーから成功した3xxトランザクション数
-.10.40. ``[vhostMin]``     http.res4xxAverage                  Integer    ソースサーバーが送信した平均4xx応答数
-.10.41. ``[vhostMin]``     http.res4xxCompleteAverage          Integer    ソースサーバーから成功した平均4xxトランザクション数
-.10.42. ``[vhostMin]``     http.res4xxTimeRes                  Integer    ソースサーバーから4xx応答ヘッダを受信するまでの平均所要時間（0.01ms）
-.10.43. ``[vhostMin]``     http.res4xxTimeComplete             Integer    ソースサーバーから4xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.44. ``[vhostMin]``     http.res4xxCount                    Integer    ソースサーバーが送信した4xx応答数
-.10.45. ``[vhostMin]``     http.res4xxCompleteCount            Integer    ソースサーバーから成功した4xxトランザクション数
-.10.50. ``[vhostMin]``     http.res5xxAverage                  Integer    ソースサーバーが送信した平均5xx応答数
-.10.51. ``[vhostMin]``     http.res5xxCompleteAverage          Integer    ソースサーバーから成功した平均5xxトランザクション数
-.10.52. ``[vhostMin]``     http.res5xxTimeRes                  Integer    ソースサーバーから5xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.53. ``[vhostMin]``     http.res5xxTimeComplete             Integer    ソースサーバーから5xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.54. ``[vhostMin]``     http.res5xxCount                    Integer    ソースサーバーが送信した5xx応答数
-.10.55. ``[vhostMin]``     http.res5xxCompleteCount            Integer    ソースサーバーから成功した5xxトランザクション数
-.10.60. ``[vhostMin]``     http.connectTimeoutAverage          Integer    平均ソースサーバー接続に失敗した回数
+.1. ``[vhostMin]``         inbound                             Integer    オリジンサーバーから受信し平均トラフィック(Bytes)
+.2. ``[vhostMin]``         outbound                            Integer    オリジンサーバーに送信平均トラフィック(Bytes)
+.3. ``[vhostMin]``         sessionAverage                      Integer    全体オリジンサーバーの平均セッション数
+.4. ``[vhostMin]``         activesessionAverage                Integer    全体オリジンサーバーセッションの中で送信されているセッションの平均数 
+.10                        http                                OID        オリジンサーバーのHTTPトラフィック情報
+.10.1. ``[vhostMin]``      http.inbound                        Integer    オリジンサーバーから受信し平均のHTTPトラフィック(Bytes)
+.10.2. ``[vhostMin]``      http.outbound                       Integer    オリジンサーバーに送信平均HTTPトラフィック(Bytes)
+.10.3. ``[vhostMin]``      http.sessionAverage                 Integer    オリジンサーバーの平均HTTPセッション数
+.10.4. ``[vhostMin]``      http.reqHeaderSize                  Integer    オリジンサーバーに送信平均HTTP Headerトラフィック(Bytes)
+.10.5. ``[vhostMin]``      http.reqBodySize                    Integer    オリジンサーバーに送信平均HTTP Bodyトラフィック(Bytes)
+.10.6. ``[vhostMin]``      http.resHeaderSize                  Integer    オリジンサーバーから受信し平均HTTP Headerトラフィック(Bytes)
+.10.7. ``[vhostMin]``      http.resBodySize                    Integer    オリジンサーバーから受信し平均HTTP Bodyトラフィック(Bytes)
+.10.8. ``[vhostMin]``      http.reqAverage                     Integer    オリジンサーバーに送信される平均HTTPリクエスト数
+.10.9. ``[vhostMin]``      http.reqCount                       Integer    オリジンサーバーに送信されるHTTPリクエスト数
+.10.10. ``[vhostMin]``     http.resTotalAverage                Integer    オリジンサーバーが送信した全体の平均HTTP応答数
+.10.11. ``[vhostMin]``     http.resTotalCompleteAverage        Integer    オリジンサーバーから成功した平均HTTPトランザクション数
+.10.12. ``[vhostMin]``     http.resTotalTimeRes                Integer    オリジンサーバーからの応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.13. ``[vhostMin]``     http.resTotalTimeComplete           Integer    オリジンサーバーからの応答HTTP Transaction平均完了時間(0.01ms)
+.10.14. ``[vhostMin]``     http.resTotalCount                  Integer    オリジンサーバーが送信した完全なHTTP応答数
+.10.15. ``[vhostMin]``     http.resTotalCompleteCount          Integer    オリジンサーバーから成功したHTTPトランザクション数
+.10.20. ``[vhostMin]``     http.res2xxAverage                  Integer    オリジンサーバーが送信した平均2xx応答数
+.10.21. ``[vhostMin]``     http.res2xxCompleteAverage          Integer    オリジンサーバーから成功した平均2xxトランザクション数
+.10.22. ``[vhostMin]``     http.res2xxTimeRes                  Integer    オリジンサーバーから2xxレスポンスヘッダを受信するまでの平均所要時間(0.01ms)
+.10.23. ``[vhostMin]``     http.res2xxTimeComplete             Integer    オリジンサーバーから2xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.24. ``[vhostMin]``     http.res2xxCount                    Integer    オリジンサーバーが送信した2xx応答数
+.10.25. ``[vhostMin]``     http.res2xxCompleteCount            Integer    オリジンサーバーから成功した2xxトランザクション数
+.10.30. ``[vhostMin]``     http.res3xxAverage                  Integer    オリジンサーバーが送信した平均3xx応答数
+.10.31. ``[vhostMin]``     http.res3xxCompleteAverage          Integer    オリジンサーバーから成功した平均3xxトランザクション数
+.10.32. ``[vhostMin]``     http.res3xxTimeRes                  Integer    オリジンサーバーから3xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.33. ``[vhostMin]``     http.res3xxTimeComplete             Integer    オリジンサーバーから3xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.34. ``[vhostMin]``     http.res3xxCount                    Integer    オリジンサーバーが送信した3xx応答数
+.10.35. ``[vhostMin]``     http.res3xxCompleteCount            Integer    オリジンサーバーから成功した3xxトランザクション数
+.10.40. ``[vhostMin]``     http.res4xxAverage                  Integer    オリジンサーバーが送信した平均4xx応答数
+.10.41. ``[vhostMin]``     http.res4xxCompleteAverage          Integer    オリジンサーバーから成功した平均4xxトランザクション数
+.10.42. ``[vhostMin]``     http.res4xxTimeRes                  Integer    オリジンサーバーから4xx応答ヘッダを受信するまでの平均所要時間（0.01ms）
+.10.43. ``[vhostMin]``     http.res4xxTimeComplete             Integer    オリジンサーバーから4xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.44. ``[vhostMin]``     http.res4xxCount                    Integer    オリジンサーバーが送信した4xx応答数
+.10.45. ``[vhostMin]``     http.res4xxCompleteCount            Integer    オリジンサーバーから成功した4xxトランザクション数
+.10.50. ``[vhostMin]``     http.res5xxAverage                  Integer    オリジンサーバーが送信した平均5xx応答数
+.10.51. ``[vhostMin]``     http.res5xxCompleteAverage          Integer    オリジンサーバーから成功した平均5xxトランザクション数
+.10.52. ``[vhostMin]``     http.res5xxTimeRes                  Integer    オリジンサーバーから5xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.53. ``[vhostMin]``     http.res5xxTimeComplete             Integer    オリジンサーバーから5xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.54. ``[vhostMin]``     http.res5xxCount                    Integer    オリジンサーバーが送信した5xx応答数
+.10.55. ``[vhostMin]``     http.res5xxCompleteCount            Integer    オリジンサーバーから成功した5xxトランザクション数
+.10.60. ``[vhostMin]``     http.connectTimeoutAverage          Integer    平均オリジンサーバー接続に失敗した回数
 .10.61. ``[vhostMin]``     http.receiveTimeoutAverage          Integer    平均元サーバー送信に失敗した回数
-.10.62. ``[vhostMin]``     http.connectAverage                 Integer    平均ソースサーバー接続成功回数
-.10.63. ``[vhostMin]``     http.dnsQueryTime                   Integer    ソースサーバー接続時の平均DNSクエリの所要時間
-.10.64. ``[vhostMin]``     http.connectTime                    Integer    ソースサーバーの平均接続時間(0.01ms)
-.10.65. ``[vhostMin]``     http.connectTimeoutCount            Integer    ソースサーバー接続に失敗した回数
-.10.66. ``[vhostMin]``     http.receiveTimeoutCount            Integer    ソースサーバーの転送に失敗した回数
-.10.67. ``[vhostMin]``     http.connectCount                   Integer    ソースサーバー接続成功回数
-.10.68. ``[vhostMin]``     http.closeAverage                   Integer    転送中のソースサーバーから先にソケットを終了した平均回数
-.10.69. ``[vhostMin]``     http.closeCount                     Integer    転送中のソースサーバーから先にソケットを終了した回数
+.10.62. ``[vhostMin]``     http.connectAverage                 Integer    平均オリジンサーバー接続成功回数
+.10.63. ``[vhostMin]``     http.dnsQueryTime                   Integer    オリジンサーバー接続時の平均DNSクエリの所要時間
+.10.64. ``[vhostMin]``     http.connectTime                    Integer    オリジンサーバーの平均接続時間(0.01ms)
+.10.65. ``[vhostMin]``     http.connectTimeoutCount            Integer    オリジンサーバー接続に失敗した回数
+.10.66. ``[vhostMin]``     http.receiveTimeoutCount            Integer    オリジンサーバーの転送に失敗した回数
+.10.67. ``[vhostMin]``     http.connectCount                   Integer    オリジンサーバー接続成功回数
+.10.68. ``[vhostMin]``     http.closeAverage                   Integer    転送中のオリジンサーバーから先にソケットを終了した平均回数
+.10.69. ``[vhostMin]``     http.closeCount                     Integer    転送中のオリジンサーバーから先にソケットを終了した回数
 .11                        portbypass                          OID        Portバイパス元サーバーのトラフィック情報
-.11.1. ``[vhostMin]``      portbypass.inbound                  Integer    Portバイパスを介して、元のサーバーから受け取る平均トラフィック(Bytes)
-.11.2. ``[vhostMin]``      portbypass.outbound                 Integer    Portバイパスを介して、元のサーバーに送信する平均トラフィック(Bytes)
-.11.3. ``[vhostMin]``      portbypass.sessionAverage           Integer    Portバイパス中の平均元のサーバーのセッション数
-.11.4. ``[vhostMin]``      portbypass.closedAverage            Integer    Portバイパス中のソースサーバーが接続を終了した平均回数
-.11.5. ``[vhostMin]``      portbypass.connectTimeoutAverage    Integer    Portバイパス元のサーバーの平均接続失敗回数
-.11.6. ``[vhostMin]``      portbypass.closedCount              Integer    Portバイパス中のソースサーバーが接続を終了した回数
-.11.7. ``[vhostMin]``      portbypass.connectTimeoutCount      Integer    Portバイパス元のサーバー接続に失敗した回数
+.11.1. ``[vhostMin]``      portbypass.inbound                  Integer    Portバイパスを介してオリジンサーバーから受け取る平均トラフィック(Bytes)
+.11.2. ``[vhostMin]``      portbypass.outbound                 Integer    Portバイパスを介してオリジンサーバーに送信する平均トラフィック(Bytes)
+.11.3. ``[vhostMin]``      portbypass.sessionAverage           Integer    Portバイパス中の平均オリジンサーバーのセッション数
+.11.4. ``[vhostMin]``      portbypass.closedAverage            Integer    Portバイパス中のオリジンサーバーが接続を終了した平均回数
+.11.5. ``[vhostMin]``      portbypass.connectTimeoutAverage    Integer    Portバイパスオリジンサーバーの平均接続失敗回数
+.11.6. ``[vhostMin]``      portbypass.closedCount              Integer    Portバイパス中のオリジンサーバーが接続を終了した回数
+.11.7. ``[vhostMin]``      portbypass.connectTimeoutCount      Integer    Portバイパスオリジンサーバー接続に失敗した回数
 ========================== =================================== ========== ===================================================================
 
 
@@ -585,7 +585,7 @@ cache.host.traffic.client
 
    OID = 1.3.6.1.4.1.40001.1.4.1.11.11
 
-クライアントトラフィックの統計情報を提供する。 クライアントのトラフィックは、HTTPトラフィックは、SSLトラフィック、Portバイパストラフィックに区分される。 SNMPでは、ディレクトリごとの統計を提供しない。 たとえディレクトリの統計情報が設定されているとしても、合算されています。
+クライアントトラフィックの統計情報を提供します。 クライアントのトラフィックはHTTPトラフィックはSSLトラフィックPortバイパストラフィックに区分されます。 SNMPではディレクトリごとの統計を提供しません。 たとえディレクトリの統計情報が設定されているとしても合算されています。
 
 ========================== ========================================== ========== =============================================================
 OID                        Name                                       Type       Description
@@ -682,7 +682,7 @@ cache.host.traffic.filesystem
 
    OID = 1.3.6.1.4.1.40001.1.4.1.11.20
 
-HostのFile I / O統計を提供する。
+HostのFile I / O統計を提供します。
 
 ======================== ============================================ ========== =============================================
 OID                      Name                                         Type       Description
@@ -740,7 +740,7 @@ cache.host.traffic.dims
 
    OID = 1.3.6.1.4.1.40001.1.4.1.11.21
 
-HostのDIMS変換統計を提供する。
+HostのDIMS変換統計を提供します。
 
 ======================== ============================================ ========== =============================================
 OID                      Name                                         Type       Description
@@ -748,8 +748,8 @@ OID                      Name                                         Type      
 .1. ``[vhostMin]``       requests                                     Integer    DIMS変換要求数
 .2. ``[vhostMin]``       converted                                    Integer    変換に成功回数
 .3. ``[vhostMin]``       failed                                       Integer    変換に失敗した回数
-.4. ``[vhostMin]``       avgsrcsize                                   Integer    元の画像の平均サイズ (Bytes)
-.5. ``[vhostMin]``       avgdestsize                                  Integer    変換された画像の平均サイズ (Bytes)
+.4. ``[vhostMin]``       avgsrcsize                                   Integer    元のイメージの平均サイズ (Bytes)
+.5. ``[vhostMin]``       avgdestsize                                  Integer    変換されたイメージの平均サイズ (Bytes)
 .6. ``[vhostMin]``       avgtime                                      Integer    変換所要時間 (ms)
 ======================== ============================================ ========== =============================================
 
@@ -764,7 +764,7 @@ cache.host.traffic.compression
 
    OID = 1.3.6.1.4.1.40001.1.4.1.11.22
 
-Hostの圧縮統計を提供する。
+Hostの圧縮統計を提供します。
 
 ======================== ============================================ ========== =============================================
 OID                      Name                                         Type       Description
@@ -790,7 +790,7 @@ cache.vhost
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1
 
-仮想ホストの情報を提供する。  ``[vhostIndex]`` は1から仮想ホストの数ほどの範囲を持つ。
+仮想ホストの情報を提供します。 ``[vhostIndex]`` は1から仮想ホストの数ほどの範囲を持つ。
 
 ======================= ========= ========== ============================================
 OID                     Name      Type       Description
@@ -813,7 +813,7 @@ cache.vhost.contents
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.10
 
-仮想ホストがサービスするコンテンツ情報を提供する。
+仮想ホストがサービスするコンテンツ情報を提供します。
 
 ========================= =================== ========== =============================
 OID                       Name                Type       Description
@@ -860,7 +860,7 @@ cache.vhost.traffic
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11
 
-仮想ホストのキャッシュサービスとトラフィックの統計情報を提供する。trafficのすべての統計情報は最大60分までの平均を提供します。minは、 '分'を意味し、最大60までの値を有する。minが省略されたり0であれば、リアルタイムの情報を提供する。
+仮想ホストのキャッシュサービスとトラフィックの統計情報を提供します。trafficのすべての統計情報は最大60分までの平均を提供します。minは'分'を意味し最大60までの値を有します。minが省略されたり0であればリアルタイムの情報を提供します。
 
 ========================================= ================= =========== ==============================
 OID                                       Name              Type        Description
@@ -884,73 +884,73 @@ cache.vhost.traffic.origin
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11.10
 
-ソースサーバートラフィックの統計情報を提供する。ソースサーバーのトラフィックは、HTTPトラフィックとPortバイパストラフィックに区分される。
+オリジンサーバートラフィックの統計情報を提供します。オリジンサーバーのトラフィックはHTTPトラフィックとPortバイパストラフィックに区分されます。
 
 ============================================= ===================================== ========== =================================================================
 OID                                           Name                                  Type       Description
 ============================================= ===================================== ========== =================================================================
-.1. ``[vhostMin]`` . ``[vhostIndex]``         inbound                               Integer    ソースサーバーから受信し、平均トラフィック(Bytes)
-.2. ``[vhostMin]`` . ``[vhostIndex]``         outbound                              Integer    ソースサーバーに送信平均トラフィック(Bytes)
-.3. ``[vhostMin]`` . ``[vhostIndex]``         sessionAverage                        Integer    全体元のサーバーの平均セッション数
-.4. ``[vhostMin]`` . ``[vhostIndex]``         activesessionAverage                  Integer    全体元のサーバーセッションの中で送信されているセッションの平均数
-.10                                           http                                  OID        ソースサーバーのHTTPトラフィック情報
-.10.1. ``[vhostMin]`` . ``[vhostIndex]``      http.inbound                          Integer    ソースサーバーから受信し、平均のHTTPトラフィック(Bytes)
-.10.2. ``[vhostMin]`` . ``[vhostIndex]``      http.outbound                         Integer    ソースサーバーに送信平均HTTPトラフィック(Bytes)
-.10.3. ``[vhostMin]`` . ``[vhostIndex]``      http.sessionAverage                   Integer    ソースサーバーの平均HTTPセッション数
-.10.4. ``[vhostMin]`` . ``[vhostIndex]``      http.reqHeaderSize                    Integer    ソースサーバーに送信平均HTTP Headerトラフィック(Bytes)
-.10.5. ``[vhostMin]`` . ``[vhostIndex]``      http.reqBodySize                      Integer    ソースサーバーに送信平均HTTP Bodyトラフィック(Bytes)
-.10.6. ``[vhostMin]`` . ``[vhostIndex]``      http.resHeaderSize                    Integer    ソースサーバーから受信し、平均HTTP Headerトラフィック(Bytes)
-.10.7. ``[vhostMin]`` . ``[vhostIndex]``      http.resBodySize                      Integer    ソースサーバーから受信し、平均HTTP Bodyトラフィック(Bytes)
-.10.8. ``[vhostMin]`` . ``[vhostIndex]``      http.reqAverage                       Integer    ソースサーバーに送信される平均HTTPリクエスト数
-.10.9. ``[vhostMin]`` . ``[vhostIndex]``      http.reqCount                         Integer    ソースサーバーに送信されるHTTPリクエスト数
-.10.10. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalAverage                  Integer    ソースサーバーが送信した全体の平均HTTP応答数
-.10.11. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCompleteAverage          Integer    ソースサーバーから成功した平均HTTPトランザクション数
-.10.12. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalTimeRes                  Integer    元のサーバーからの応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.13. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalTimeComplete             Integer    ソースサーバーからの応答HTTP Transaction平均完了時間(0.01ms)
-.10.14. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCount                    Integer    ソースサーバーが送信した完全なHTTP応答数
-.10.15. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCompleteCount            Integer    ソースサーバーから成功したHTTPトランザクション数
-.10.20. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxAverage                    Integer    ソースサーバーが送信した平均2xx応答数
-.10.21. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCompleteAverage            Integer    ソースサーバーから成功した平均2xxトランザクション数
-.10.22. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxTimeRes                    Integer    ソースサーバーから2xxレスポンスヘッダを受信するまでの平均所要時間(0.01ms)
-.10.23. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxTimeComplete               Integer    ソースサーバーから2xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.24. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCount                      Integer    ソースサーバーが送信した2xx応答数
-.10.25. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCompleteCount              Integer    ソースサーバーから成功した2xxトランザクション数
-.10.30. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxAverage                    Integer    ソースサーバーが送信した平均3xx応答数
-.10.31. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCompleteAverage            Integer    ソースサーバーから成功した平均3xxトランザクション数
-.10.32. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxTimeRes                    Integer    ソースサーバーから3xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.33. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxTimeComplete               Integer    ソースサーバーから3xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.34. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCount                      Integer    ソースサーバーが送信した3xx応答数
-.10.35. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCompleteCount              Integer    ソースサーバーから成功した3xxトランザクション数
-.10.40. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxAverage                    Integer    ソースサーバーが送信した平均4xx応答数
-.10.41. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCompleteAverage            Integer    ソースサーバーから成功した平均4xxトランザクション数
-.10.42. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxTimeRes                    Integer    ソースサーバーから4xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.43. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxTimeComplete               Integer    ソースサーバーから4xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.44. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCount                      Integer    ソースサーバーが送信した4xx応答数
-.10.45. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCompleteCount              Integer    ソースサーバーから成功した4xxトランザクション数
-.10.50. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxAverage                    Integer    ソースサーバーが送信した平均5xx応答数
-.10.51. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCompleteAverage            Integer    ソースサーバーから成功した平均5xxトランザクション数
-.10.52. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxTimeRes                    Integer    ソースサーバーから5xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
-.10.53. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxTimeComplete               Integer    ソースサーバーから5xx応答HTTP Transaction平均完了時間(0.01ms)
-.10.54. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCount                      Integer    ソースサーバーが送信した5xx応答数
-.10.55. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCompleteCount              Integer    ソースサーバーから成功した5xxトランザクション数
-.10.60. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTimeoutAverage            Integer    平均ソースサーバー接続に失敗した回数
+.1. ``[vhostMin]`` . ``[vhostIndex]``         inbound                               Integer    オリジンサーバーから受信し平均トラフィック(Bytes)
+.2. ``[vhostMin]`` . ``[vhostIndex]``         outbound                              Integer    オリジンサーバーに送信平均トラフィック(Bytes)
+.3. ``[vhostMin]`` . ``[vhostIndex]``         sessionAverage                        Integer    全体オリジンサーバーの平均セッション数
+.4. ``[vhostMin]`` . ``[vhostIndex]``         activesessionAverage                  Integer    全体オリジンサーバーセッションの中で送信されているセッションの平均数
+.10                                           http                                  OID        オリジンサーバーのHTTPトラフィック情報
+.10.1. ``[vhostMin]`` . ``[vhostIndex]``      http.inbound                          Integer    オリジンサーバーから受信し平均のHTTPトラフィック(Bytes)
+.10.2. ``[vhostMin]`` . ``[vhostIndex]``      http.outbound                         Integer    オリジンサーバーに送信平均HTTPトラフィック(Bytes)
+.10.3. ``[vhostMin]`` . ``[vhostIndex]``      http.sessionAverage                   Integer    オリジンサーバーの平均HTTPセッション数
+.10.4. ``[vhostMin]`` . ``[vhostIndex]``      http.reqHeaderSize                    Integer    オリジンサーバーに送信平均HTTP Headerトラフィック(Bytes)
+.10.5. ``[vhostMin]`` . ``[vhostIndex]``      http.reqBodySize                      Integer    オリジンサーバーに送信平均HTTP Bodyトラフィック(Bytes)
+.10.6. ``[vhostMin]`` . ``[vhostIndex]``      http.resHeaderSize                    Integer    オリジンサーバーから受信し平均HTTP Headerトラフィック(Bytes)
+.10.7. ``[vhostMin]`` . ``[vhostIndex]``      http.resBodySize                      Integer    オリジンサーバーから受信し平均HTTP Bodyトラフィック(Bytes)
+.10.8. ``[vhostMin]`` . ``[vhostIndex]``      http.reqAverage                       Integer    オリジンサーバーに送信される平均HTTPリクエスト数
+.10.9. ``[vhostMin]`` . ``[vhostIndex]``      http.reqCount                         Integer    オリジンサーバーに送信されるHTTPリクエスト数
+.10.10. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalAverage                  Integer    オリジンサーバーが送信した全体の平均HTTP応答数
+.10.11. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCompleteAverage          Integer    オリジンサーバーから成功した平均HTTPトランザクション数
+.10.12. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalTimeRes                  Integer    オリジンサーバーからの応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.13. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalTimeComplete             Integer    オリジンサーバーからの応答HTTP Transaction平均完了時間(0.01ms)
+.10.14. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCount                    Integer    オリジンサーバーが送信した完全なHTTP応答数
+.10.15. ``[vhostMin]`` . ``[vhostIndex]``     http.resTotalCompleteCount            Integer    オリジンサーバーから成功したHTTPトランザクション数
+.10.20. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxAverage                    Integer    オリジンサーバーが送信した平均2xx応答数
+.10.21. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCompleteAverage            Integer    オリジンサーバーから成功した平均2xxトランザクション数
+.10.22. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxTimeRes                    Integer    オリジンサーバーから2xxレスポンスヘッダを受信するまでの平均所要時間(0.01ms)
+.10.23. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxTimeComplete               Integer    オリジンサーバーから2xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.24. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCount                      Integer    オリジンサーバーが送信した2xx応答数
+.10.25. ``[vhostMin]`` . ``[vhostIndex]``     http.res2xxCompleteCount              Integer    オリジンサーバーから成功した2xxトランザクション数ョン数
+.10.30. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxAverage                    Integer    オリジンサーバーが送信した平均3xx応答数
+.10.31. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCompleteAverage            Integer    オリジンサーバーから成功した平均3xxトランザクション数
+.10.32. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxTimeRes                    Integer    オリジンサーバーから3xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.33. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxTimeComplete               Integer    オリジンサーバーから3xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.34. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCount                      Integer    オリジンサーバーが送信した3xx応答数
+.10.35. ``[vhostMin]`` . ``[vhostIndex]``     http.res3xxCompleteCount              Integer    オリジンサーバーから成功した3xxトランザクション数
+.10.40. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxAverage                    Integer    オリジンサーバーが送信した平均4xx応答数
+.10.41. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCompleteAverage            Integer    オリジンサーバーから成功した平均4xxトランザクション数
+.10.42. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxTimeRes                    Integer    オリジンサーバーから4xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.43. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxTimeComplete               Integer    オリジンサーバーから4xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.44. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCount                      Integer    オリジンサーバーが送信した4xx応答数
+.10.45. ``[vhostMin]`` . ``[vhostIndex]``     http.res4xxCompleteCount              Integer    オリジンサーバーから成功した4xxトランザクション数
+.10.50. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxAverage                    Integer    オリジンサーバーが送信した平均5xx応答数
+.10.51. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCompleteAverage            Integer    オリジンサーバーから成功した平均5xxトランザクション数
+.10.52. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxTimeRes                    Integer    オリジンサーバーから5xx応答ヘッダを受信するまでの平均所要時間(0.01ms)
+.10.53. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxTimeComplete               Integer    オリジンサーバーから5xx応答HTTP Transaction平均完了時間(0.01ms)
+.10.54. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCount                      Integer    オリジンサーバーが送信した5xx応答数
+.10.55. ``[vhostMin]`` . ``[vhostIndex]``     http.res5xxCompleteCount              Integer    オリジンサーバーから成功した5xxトランザクション数
+.10.60. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTimeoutAverage            Integer    平均オリジンサーバー接続に失敗した回数
 .10.61. ``[vhostMin]`` . ``[vhostIndex]``     http.receiveTimeoutAverage            Integer    平均元サーバー送信に失敗した回数
-.10.62. ``[vhostMin]`` . ``[vhostIndex]``     http.connectAverage                   Integer    平均ソースサーバー接続成功回数
-.10.63. ``[vhostMin]`` . ``[vhostIndex]``     http.dnsQueryTime                     Integer    ソースサーバー接続時の平均DNSクエリの所要時間
-.10.64. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTime                      Integer    ソースサーバーの平均接続時間(0.01ms)
-.10.65. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTimeoutCount              Integer    ソースサーバー接続に失敗した回数
-.10.66. ``[vhostMin]`` . ``[vhostIndex]``     http.receiveTimeoutCount              Integer    ソースサーバーの転送に失敗した回数
-.10.67. ``[vhostMin]`` . ``[vhostIndex]``     http.connectCount                     Integer    ソースサーバー接続成功回数
-.10.68. ``[vhostMin]`` . ``[vhostIndex]``     http.closeAverage                     Integer    転送中のソースサーバーから先にソケットを終了した平均回数
-.10.69. ``[vhostMin]`` . ``[vhostIndex]``     http.closeCount                       Integer    転送中のソースサーバーから先にソケットを終了した回数
+.10.62. ``[vhostMin]`` . ``[vhostIndex]``     http.connectAverage                   Integer    平均オリジンサーバー接続成功回数
+.10.63. ``[vhostMin]`` . ``[vhostIndex]``     http.dnsQueryTime                     Integer    オリジンサーバー接続時の平均DNSクエリの所要時間
+.10.64. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTime                      Integer    オリジンサーバーの平均接続時間(0.01ms)
+.10.65. ``[vhostMin]`` . ``[vhostIndex]``     http.connectTimeoutCount              Integer    オリジンサーバー接続に失敗した回数
+.10.66. ``[vhostMin]`` . ``[vhostIndex]``     http.receiveTimeoutCount              Integer    オリジンサーバーの転送に失敗した回数
+.10.67. ``[vhostMin]`` . ``[vhostIndex]``     http.connectCount                     Integer    オリジンサーバー接続成功回数
+.10.68. ``[vhostMin]`` . ``[vhostIndex]``     http.closeAverage                     Integer    転送中のオリジンサーバーから先にソケットを終了した平均回数
+.10.69. ``[vhostMin]`` . ``[vhostIndex]``     http.closeCount                       Integer    転送中のオリジンサーバーから先にソケットを終了した回数
 .11                                           portbypass                            OID        Portバイパス元サーバーのトラフィック情報
-.11.1. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.inbound                    Integer    Portバイパスを介して、元のサーバーから受け取る平均トラフィック(Bytes)
-.11.2. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.outbound                   Integer    Portバイパスを介して、元のサーバーに送信する平均トラフィック(Bytes)
-.11.3. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.sessionAverage             Integer    Portバイパス中の平均元のサーバーのセッション数
-.11.4. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.closedAverage              Integer    Portバイパス中のソースサーバーが接続を終了した平均回数
-.11.5. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.connectTimeoutAverage      Integer    Portバイパス元のサーバーの平均接続失敗回数
-.11.6. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.closedCount                Integer    Portバイパス中のソースサーバーが接続を終了した回数
-.11.7. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.connectTimeoutCount        Integer    Portバイパス元のサーバー接続に失敗した回数
+.11.1. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.inbound                    Integer    Portバイパスを介してオリジンサーバーから受け取る平均トラフィック(Bytes)
+.11.2. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.outbound                   Integer    Portバイパスを介してオリジンサーバーに送信する平均トラフィック(Bytes)
+.11.3. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.sessionAverage             Integer    Portバイパス中の平均オリジンサーバーのセッション数
+.11.4. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.closedAverage              Integer    Portバイパス中のオリジンサーバーが接続を終了した平均回数
+.11.5. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.connectTimeoutAverage      Integer    Portバイパスオリジンサーバーの平均接続失敗回数
+.11.6. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.closedCount                Integer    Portバイパス中のオリジンサーバーが接続を終了した回数
+.11.7. ``[vhostMin]`` . ``[vhostIndex]``      portbypass.connectTimeoutCount        Integer    Portバイパスオリジンサーバー接続に失敗した回数
 ============================================= ===================================== ========== =================================================================
 
 
@@ -964,7 +964,7 @@ cache.vhost.traffic.client
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11.11
 
-クライアントトラフィックの統計情報を提供する。クライアントのトラフィックは、HTTPトラフィックは、SSLトラフィック、Portバイパストラフィックに区分される。SNMPでは、ディレクトリごとの統計を提供しない。たとえディレクトリの統計情報が設定されているとしても、合算された統計を提供します。
+クライアントトラフィックの統計情報を提供します。クライアントのトラフィックはHTTPトラフィックは、SSLトラフィック、Portバイパストラフィックに区分されます。SNMPではディレクトリごとの統計を提供しません。たとえディレクトリの統計情報が設定されているとしても合算された統計を提供します。
 
 ============================================= ========================================= ========== ==============================================================
 OID                                           Name                                      Type       Description
@@ -1061,7 +1061,7 @@ cache.vhost.traffic.filesystem
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11.20
 
-仮想ホストのFile I / O統計を提供する。
+仮想ホストのFile I / O統計を提供します。
 
 =========================================== =========================================== ========== ==============================================
 OID                                         Name                                        Type       Description
@@ -1119,7 +1119,7 @@ cache.vhost.traffic.dims
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11.21
 
-仮想ホストのDIMS変換統計を提供する。
+仮想ホストのDIMS変換統計を提供します。
 
 =========================================== =========================================== ========== ==============================================
 OID                                         Name                                        Type       Description
@@ -1127,8 +1127,8 @@ OID                                         Name                                
 .1. ``[vhostMin]`` . ``[vhostIndex]``       requests                                    Integer    DIMS変換要求数
 .2. ``[vhostMin]`` . ``[vhostIndex]``       converted                                   Integer    変換に成功回数
 .3. ``[vhostMin]`` . ``[vhostIndex]``       failed                                      Integer    変換に失敗した回数
-.4. ``[vhostMin]`` . ``[vhostIndex]``       avgsrcsize                                  Integer    元の画像の平均サイズ (Bytes)
-.5. ``[vhostMin]`` . ``[vhostIndex]``       avgdestsize                                 Integer    変換された画像の平均サイズ (Bytes)
+.4. ``[vhostMin]`` . ``[vhostIndex]``       avgsrcsize                                  Integer    元のイメージの平均サイズ (Bytes)
+.5. ``[vhostMin]`` . ``[vhostIndex]``       avgdestsize                                 Integer    変換されたイメージの平均サイズ (Bytes)
 .6. ``[vhostMin]`` . ``[vhostIndex]``       avgtime                                     Integer    変換所要時間 (ms)
 =========================================== =========================================== ========== ==============================================
 
@@ -1143,7 +1143,7 @@ cache.vhost.traffic.compression
 
    OID = 1.3.6.1.4.1.40001.1.4.3.1.11.22
 
-仮想ホストの圧縮統計を提供する。
+仮想ホストの圧縮統計を提供します。
 
 =========================================== =========================================== ========== ==============================================
 OID                                         Name                                        Type       Description
@@ -1167,7 +1167,7 @@ cache.view
 
    OID = 1.3.6.1.4.1.40001.1.4.11.1
 
-仮想ホストの統計と同じ情報を提供する。
+仮想ホストの統計と同じ情報を提供します。
 ``[viewIndex]`` は1からViewの数ほどの範囲を持つ。
 
 - 1.3.6.1.4.1.40001.1.4.3 - 仮想ホストの統計
