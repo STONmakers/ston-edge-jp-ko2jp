@@ -3,29 +3,29 @@
 第12章 ログ
 ******************
 
-この章では、ログを大事にする。 サービスは、ログに始まり、ログに終わる。 ログは、金であり、法であり、紛争地域の平和維持軍である。
+この章ではログを説明します。サービスはログに始まりログに終わる。 ログは金であり法である正義の味方です。
 
-ログは、グローバルと仮想ホストに区分される。 すべてのログは記録するかどうかを設定することができ、共通の属性を持つ。 ::
+ログはグローバルと仮想ホストに区分されます。 すべてのログは記録有無を設定することができ共通の属性を持つ。 ::
 
    <XXX Type="time" Unit="1440" Retention="10" Compression="OFF">ON</XXX>
 
--  ``Type (基本: time)`` , ``Unit (基本: 1440分)`` ログローリング条件を設定する。
+-  ``Type (デフォルト: time)`` , ``Unit (デフォルト: 1440分)`` ログローテート条件を設定します。
 
-   - ``time`` 設定された ``unit`` 時間（単位：分）ごとにログファイルをローリングする。
-   - ``size`` 設定された ``unit`` サイズ（単位：MB）ごとにログファイルをローリングする。
-   - ``both`` コンマ（、）で区切って、時間とサイズを同時に設定する。 たとえばUnit = "1440、100"である場合、時間が24時間（1440分）または100MBの場合、ログファイルをローリングする。
+   - ``time`` 設定された ``unit`` 時間（単位：分）ごとにログファイルをローテートします。
+   - ``size`` 設定された ``unit`` サイズ（単位：MB）ごとにログファイルをローテートします。
+   - ``both`` コンマ（、）で区切って時間とサイズを同時に設定します。 たとえばUnit =  "1440、100"である場合時間が24時間（1440分）または100MBの場合ログファイルをローテートします。
 
--  ``Retention (基本: 10個)`` 単位のログファイルを最大n個の維持である。
+-  ``Retention (デフォルト: 10個)`` 単位のログファイルを最大n個の維持です。
 
--  ``Compression (基本: OFF)`` ログがローリングされる圧縮を行う。 たとえばaccess_20140715_0000.logファイルがローリングされると、access_20140715_0000.log.gzに圧縮されて保存される。
+-  ``Compression (デフォルト: OFF)`` ログがローテートされる圧縮を行う。 たとえばaccess_20140715_0000.logファイルがローテートされるとaccess_20140715_0000.log.gzに圧縮されて保存されます。
 
-``Type`` が "time" , ``Unit`` が10の場合、ログは10分毎にローリングされる。 たとえば、サービスを2:18分に開始しても、ログは、10分の2:20、2:30、2:40にローリングされる。 同様に、一日に一回、毎日0時0分にローリングする1440（60分X 24時間）で ``Unit`` 値に設定する。
-``time`` の設定でログは一日に一度、無条件ローリングされるので、 ``Unit`` の最大値は、1440を超えることができない。
+``Type`` が "time" 、 ``Unit`` が10の場合ログは10分毎にローテートされます。 たとえばサービスを2:18分に開始してもログは10分の2:20、2:30、2:40にローテートされます。 同様に一日に一回毎日0時0分にローテートする1440（60分X 24時間）で ``Unit`` 値に設定します。
+``time`` の設定でログは一日に一度無条件ローテートされるので ``Unit`` の最大値は1440を超えることができない。
 
 .. figure:: img/log_rolling1.jpg
    :align: center
 
-最大値は24時間（Unit = 1440）時間ごとにログがローリングするように設定した場合は、次の図のようにログが記録される。
+最大値は24時間（Unit = 1440）時間ごとにログがローテートするように設定した場合は次の図のようにログが記録されます。
 
 .. figure:: img/log_rolling2.jpg
    :align: center
@@ -41,7 +41,7 @@
 Installログ
 ====================================
 
-インストール/アップデート時にすべての内容がinstall.logに記録される。 このログは、別の設定がない。 ::
+インストール/アップデート時にすべての内容がinstall.logに記録されます。 このログは別の設定がない。 ::
 
     #DownloadURL: http://foobar.com/ston/ston.2.0.0.rhel.2.6.32.x64.tar.gz
     #DownloadTime: 13 sec
@@ -104,14 +104,14 @@ Installログ
 Infoログ
 ====================================
 
-Infoログは、グローバル設定（server.xml）に設定する。 ::
+Infoログはグローバル設定（server.xml）に設定します。 ::
 
    # server.xml - <Server><Cache>
 
    <InfoLog Type="size" Unit="1" Retention="5">ON</InfoLog>
 
--  ``<InfoLog> (基本: ON, Type: size, Unit: 1)``
-   STONの動作と設定の変更について記録する。
+-  ``<InfoLog> (デフォルト: ON, Type: size, Unit: 1)``
+   STONの動作と設定の変更について記録します。
 
 
 .. _admin-log-deny:
@@ -119,22 +119,22 @@ Infoログは、グローバル設定（server.xml）に設定する。 ::
 Denyログ
 ====================================
 
-Denyログは、グローバル設定（server.xml）に設定する。 ::
+Denyログはグローバル設定（server.xml）に設定します。 ::
 
    # server.xml - <Server><Cache>
 
    <DenyLog Type="size" Unit="1" Retention="5">ON</DenyLog>
 
--  ``<DenyLog> (基本: ON, Type: size, Unit: 1)``
+-  ``<DenyLog> (デフォルト: ON, Type: size, Unit: 1)``
 
-   :ref:`access-control-serviceaccess` によってアクセスブロックされたIPアドレスを記録する。 ::
+   :ref:`access-control-serviceaccess` によってアクセスブロックされたIPアドレスを記録します。 ::
 
       #Fields: date time c-ip deny
       2012.11.15 07:06:10 1.1.1.1 AP
       2012.11.15 07:06:26 2.2.2.2 GIN
       2012.11.15 07:06:30 3.3.3.3 3.3.3.1-255
 
-   すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+   すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
    - ``date`` 日
    - ``time`` 時間
@@ -147,15 +147,15 @@ Denyログは、グローバル設定（server.xml）に設定する。 ::
 OriginErrorログ
 ====================================
 
-OriginErrorログは、グローバル設定（server.xml）に設定する。 ::
+OriginErrorログはグローバル設定（server.xml）に設定します。 ::
 
    # server.xml - <Server><Cache>
 
    <OriginErrorLog Type="size" Unit="5" Retention="5" Warning="OFF">ON</OriginErrorLog>
 
--  ``<OriginErrorLog> (基本: OFF, Type: size, Unit: 5, Warning: OFF)``
+-  ``<OriginErrorLog> (デフォルト: OFF, Type: size, Unit: 5, Warning: OFF)``
 
-   すべての仮想ホストのソースサーバーで発生した障害だけ記録する。 障害は、接続障害と伝送障害を意味し、元のサーバー排除/回復の結果が記録される。 ::
+   すべての仮想ホストのオリジンサーバーで発生した障害だけ記録します。 障害は接続障害と伝送障害を意味しオリジンサーバー排除/復旧の結果が記録されます。 ::
 
       #Fields: date time vhostname level s-domain s-ip cs-method cs-uri time-taken sc-error sc-resinfo
       2012.11.15 07:06:10 [example.com] [ERROR] 192.168.0.13 192.168.0.13 GET /Upload/ProductImage/stock/1716439_SM.jpg 20110 Connect-Timeout -
@@ -166,32 +166,32 @@ OriginErrorログは、グローバル設定（server.xml）に設定する。 :
       #2012.11.15 07:11:11 [example.com] 192.168.0.13 recovered back in service
       #2012.11.15 07:11:12 [example.com] Origin server list: 192.168.0.13
 
-   すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+   すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
    - ``date`` 障害が発生した日付
    - ``time`` 障害発生時間
    - ``vhostname`` [仮想ホスト]
    - ``level`` [障害レベル（ErrorまたはWarning)]
-   - ``s-domain`` ソースサーバーのドメイン
-   - ``s-ip`` ソースサーバーのIP
-   - ``cs-method`` STONが元のサーバーに送信HTTP Method
-   - ``cs-uri`` STONが元のサーバーに送信URI
+   - ``s-domain`` オリジンサーバーのドメイン
+   - ``s-ip`` オリジンサーバーのIP
+   - ``cs-method`` STONがオリジンサーバーに送信HTTP Method
+   - ``cs-uri`` STONがオリジンサーバーに送信URI
    - ``time-taken`` 障害が発生するまでにかかった時間
    - ``sc-error`` 障害の種類
    - ``sc-resinfo`` 障害発生時サーバーの応答情報（ "、"文字で区切ら）
 
-   ``Warning`` 属性が ``ON`` であれば、次の例のように不正なHTTP通信が発生した場合に記録する。 ::
+   ``Warning`` 属性が ``ON`` であれば次の例のように不正なHTTP通信が発生した場合に記録します。 ::
 
       2012.11.15 07:09:03 [example.com] [WARNING] 10.10.10.10 121.189.63.219 GET /716439_SM.jpg 20110 PartialResponseOnNormalRequest Res=206,Len=2635
       2012.11.15 07:09:03 [example.com] [WARNING] 10.10.10.10 121.189.63.219 GET /716439_SM.jpg 20110 ClosedWithoutResponse -
 
-   不正なHTTP通信の場合は、以下の通りである。
+   不正なHTTP通信の場合は以下の通りです。
 
    - ``ClosedWithoutResponse`` 元サーバーによる接続終了。 HTTP応答を受けなかった。
    - ``ClosedWhenDownloading`` 元サーバーによる接続終了。 Content-Lengthだけダウンロードしていなかった。
-   - ``NotPartialResponseOnRangeRequest`` Range要求をしたが、応答コードが206ではない。
+   - ``NotPartialResponseOnRangeRequest`` Range要求をしたが応答コードが206ではない。
    - ``DifferentContentLengthOnRangeRequest`` 要求されたRangeとContent-Lengthが異なる。
-   - ``PartialResponseOnNormalRequest`` Rangeリクエストがないのに応答コードが206である。
+   - ``PartialResponseOnNormalRequest`` Rangeリクエストがないのに応答コードが206です。
 
 
 
@@ -200,7 +200,7 @@ OriginErrorログは、グローバル設定（server.xml）に設定する。 :
 SysLog送信
 ====================================
 
-`syslog <http://en.wikipedia.org/wiki/Syslog>`_ プロトコルを使用してログをUDPでリアルタイム転送する。 すべてのログに対してsyslogに送信されるように設定することができる。 ::
+`syslog <http://en.wikipedia.org/wiki/Syslog>`_ プロトコルを使用してログをUDPでリアルタイム転送します。 すべてのログに対してsyslogに送信されるように設定することができます。 ::
 
    # server.xml - <Server><Cache>
 
@@ -210,11 +210,11 @@ SysLog送信
 
 -  ``SysLog``
 
-   - ``OFF (基本)`` syslogを使用していない。
+   - ``OFF (デフォルト)`` syslogを使用しません。
 
-   - ``ON`` このタグの下位に設定された ``<SysLog>`` にログを送信する。
+   - ``ON`` このタグの下位に設定された ``<SysLog>`` にログを送信します。
 
-以下は、  ``<OriginErrorLog>`` が記録されるときにsyslogを設定する例である。 ::
+以下は ``<OriginErrorLog>`` が記録されるときにsyslogを設定する例です。 ::
 
    # server.xml - <Server><Cache>
 
@@ -224,13 +224,13 @@ SysLog送信
       <SysLog Priority="mail.debug" Dest="log.example.com" />
    </OriginErrorLog>
 
-1. ``<OriginErrorLog>`` の ``SysLog`` 属性を ``ON`` に設定する。
-#. ``<OriginErrorLog>`` の下位に ``<SysLog>`` タグを生成する。 n台のサーバーに同時に送信可能である。
-#. ``<SysLog>`` の ``Priority`` 属性を設定する。 この表現は、 syslogの `Facility Levels <http://en.wikipedia.org/wiki/Syslog#Facility_levels>`_ と
-   `Severity levels <http://en.wikipedia.org/wiki/Syslog#Severity_levels>`_ の組み合わせで構成する。
-#. ``<SysLog>`` の ``Dest`` 属性を設定する。 syslog受信サーバーを意味し、受信ポートが514である場合、省略可能である。
+1. ``<OriginErrorLog>`` の ``SysLog`` 属性を ``ON`` に設定します。
+#. ``<OriginErrorLog>`` の下位に ``<SysLog>`` タグを生成します。 n台のサーバーに同時に送信可能です。
+#. ``<SysLog>`` の ``Priority`` 属性を設定します。 この表現は syslogの `Facility Levels <http://en.wikipedia.org/wiki/Syslog#Facility_levels>`_ と
+   `Severity levels <http://en.wikipedia.org/wiki/Syslog#Severity_levels>`_ の組み合わせで構成します。
+#. ``<SysLog>`` の ``Dest`` 属性を設定します。 syslog受信サーバーを意味し受信ポートが514である場合省略可能です。
 
-上記の設定で記録されたsysログの例は、以下の通りである。 syslogのtagはSTON / {ログ名}に記録される。 ::
+上記の設定で記録されたsysログの例は以下の通りです。 syslogのtagはSTON / {ログ名}に記録されます。 ::
 
     Mar 12 11:24:24 192.168.0.1 STON/ORIGINERROR: 2013-03-12 14:09:20 [ERROR] [example.com] - 192.168.0.14 GET /1.gifd 1996 Connect-Timeout -
     Mar 12 11:24:24 192.168.0.1 STON/ORIGINERROR: 2013-03-12 14:09:22 [ERROR] [example.com] - 192.168.0.14 GET /favicon.ico 1995 Connect-Timeout -
@@ -240,11 +240,11 @@ SysLog送信
 
 
 
-仮想ホスト固有のログ保存
+仮想ホスト別のログ保存
 ====================================
 
-仮想ホストごとにログは別々に記録される。 ログが ``OFF`` に設定されていても、ローカルファイルにのみ書かれていないだけなので
-:ref:`api-monitoring-logtrace` は正常に動作する。 ::
+仮想ホストごとにログは別々に記録されます。 ログが ``OFF`` に設定されていてもローカルファイルにのみ書かれていないだけなので
+:ref:`api-monitoring-logtrace` は正常に動作します。 ::
 
    # server.xml - <Server><VHostDefault>
    # vhosts.xml - <Vhosts><Vhost>
@@ -253,7 +253,7 @@ SysLog送信
       ... (省略) ...
    </Log>
 
--  ``<Log>`` ``Dir`` 属性にログが記録されるディレクトリを設定します。 ログは、設定したディレクトリの下位の仮想ホストのディレクトリに生成される。
+-  ``<Log>`` ``Dir`` 属性にログが記録されるディレクトリを設定します。 ログは設定したディレクトリの下位の仮想ホストのディレクトリに生成されます。
 
 
 
@@ -262,7 +262,7 @@ SysLog送信
 DNSログ
 ====================================
 
-元サーバーのアドレスがDomainに設定された場合Resolving結果を記録する。 ::
+元サーバーのアドレスがDomainに設定された場合Resolving結果を記録します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
@@ -282,7 +282,7 @@ DNSログ
    2014-07-30 12:24:38 example.com 152 173.194.127.23,173.194.127.24,173.194.127.31,173.194.127.15 4 9 success
    2014-07-30 12:25:03 example.com 127 173.194.127.31,173.194.127.15,173.194.127.23,173.194.127.24 4 15007 success
 
-すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
 -  ``date`` 日
 -  ``time`` 時間
@@ -299,7 +299,7 @@ DNSログ
 Accessログ
 ====================================
 
-すべてのクライアントからのHTTPトランザクションを記録する。 ログ記録の時点では、HTTPトランザクションが完了した時点で、転送完了または送信停止時点を意味する。 ::
+すべてのクライアントからのHTTPトランザクションを記録します。 ログ記録の時点ではHTTPトランザクションが完了した時点で転送完了または送信停止時点を意味します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
@@ -308,21 +308,21 @@ Accessログ
 
 -  ``XFF``
 
-   - ``ON (基本)`` クライアントが送信したXFF（X-Forwarded-For）ヘッダの値とクライアントのIPアドレスをのように記録する。 ない場合は ``OFF`` と同じである。
-   - ``OFF`` クライアントのIPアドレスを記録する。
-   - ``TrimCIP``  XFFヘッダがない場合は、クライアントのIPアドレスを、ある場合（クライアントのIPアドレスを除く）XFFヘッダだけを記録する。
+   - ``ON (デフォルト)`` クライアントが送信したXFF（X-Forwarded-For）ヘッダの値とクライアントのIPアドレスをのように記録します。 ない場合は ``OFF`` と同じです。
+   - ``OFF`` クライアントのIPアドレスを記録します。
+   - ``TrimCIP``  XFFヘッダがない場合はクライアントのIPアドレスをある場合（クライアントのIPアドレスを除く）XFFヘッダだけを記録します。
 
 -  ``Form``
 
-   - ``ston (基本)`` W3C標準+拡張フィールド
+   - ``ston (デフォルト)`` W3C標準+拡張フィールド
    - ``apache`` Apache形式
    - ``iis`` IIS形式
    - ``custom`` `admin-log-access-custom`
 
 -  ``Local``
 
-   - ``OFF (基本)`` ローカル通信（Loopback）は記録しない。
-   - ``ON`` ローカル通信（Loopback）も記録する。
+   - ``OFF (デフォルト)`` ローカル通信（Loopback）は記録しません。
+   - ``ON`` ローカル通信（Loopback）も記録します。
 
 ::
 
@@ -331,7 +331,7 @@ Accessログ
     2012.06.27 16:52:26 220.134.10.5 GET /favicon.ico - 80 - 61.50.7.9 Chrome/19.0.1084.56 200 949 2 - - - TCP_HIT gzip+deflate 35 14875
     2012.06.27 17:00:06 220.168.0.13 GET /setup.Eexe - 80 - 61.168.0.102  Mozilla/5.0+(Windows+NT+6.1;+WOW64)+AppleWebKit/536.11+(KHTML,+like+Gecko)+Chrome/20.0.1132.57+Safari/536.11 206 20971800 7008 - - 398458880-419430399 TCP_HIT - 41 89764358
 
-すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
 -  ``date`` HTTPトランザクションが完了した日付
 -  ``time`` HTTPトランザクションが完了した時刻
@@ -341,21 +341,21 @@ Accessログ
 -  ``cs-uri-query`` クライアントが送信したURLの中でQueryString
 -  ``s-port`` サーバーのポート
 -  ``cs-username`` クライアントusername
--  ``c-ip`` クライアントのIPアドレス。 XFFの設定が "ON"であれば、X-Forwarded-Forヘッダの値とクライアントのIPアドレスを記録する。
+-  ``c-ip`` クライアントのIPアドレス。 XFFの設定が "ON"であればX-Forwarded-Forヘッダの値とクライアントのIPアドレスを記録します。
 -  ``cs(User-Agent)`` クライアントが送信したHTTP User-Agent
 -  ``sc-status`` サーバーの応答コード
 -  ``sc-bytes`` サーバーが送信Bytes（ヘッダ+コンテンツ）
 -  ``time-taken`` HTTPトランザクションが完了するまでかかった合計時間（ミリ秒）
 -  ``cs-referer`` クライアントが送信したHTTP Referer
--  ``sc-resinfo`` 付加情報。 "+"の文字に区分される。 圧縮されたコンテンツをサービスした場合、圧縮オプション（gzipまたはdeflate）が明示される。 安全な通信であれば、SSLプロトコルのバージョン（SSL3、TLS1、TLS1.1、TLS1.2）が明示される。 バイパスした通信であれば、 "Bypass"が明示されている。
+-  ``sc-resinfo`` 付加情報。 "+"の文字に区分されます。 圧縮されたコンテンツをサービスした場合圧縮オプション（gzipまたはdeflate）が指定されます。 安全な通信であればSSLプロトコルのバージョン（SSL3、TLS1、TLS1.1、TLS1.2）が指定されます。 バイパスした通信であれば "Bypass"が指定されている。
 
--  ``cs-range`` クライアントが送信したRangeヘッダを記録する。
+-  ``cs-range`` クライアントが送信したRangeヘッダを記録します。
 -  ``sc-cachehit`` キャッシュHIT結果
 -  ``cs-acceptencoding`` クライアントが送信されるAccept-Encodingヘッダ
 -  ``session-id`` HTTPクライアントセッションID (unsigned int64)
 -  ``sc-content-length`` サーバの応答Content-Lengthヘッダの値
 
-Accessログは、送信成功/失敗したかに関係なく、すべてのHTTPトランザクションを記録する。 HTTPトランザクションは、クライアントがHTTP要求を送信するときに開始される。 STONがクライアントに応答を送信する前にHTTP接続が終了した場合、HTTPトランザクションも終了されたものとみなす。 ログには、 ``sc-status`` と ``sc-bytes`` が0に記録される。 主STONが元のサーバーからの応答を受信する前に、クライアントが接続を終了する場合、このようなログが記録される。
+Accessログは送信成功/失敗したかに関係なくすべてのHTTPトランザクションを記録します。 HTTPトランザクションはクライアントがHTTP要求を送信するときに開始されます。 STONがクライアントに応答を送信する前にHTTP接続が終了した場合HTTPトランザクションも終了されたものとみなす。 ログには ``sc-status`` と ``sc-bytes`` が0に記録されます。 主STONがオリジンサーバーからの応答を受信する前にクライアントが接続を終了する場合このようなログが記録されます。
 
 
 
@@ -364,7 +364,7 @@ Accessログは、送信成功/失敗したかに関係なく、すべてのHTTP
 ユーザー定義のAccessログのフォーマット
 ====================================
 
-Accessログの形式をユーザー定義のログに設定する。 ::
+Accessログの形式をユーザー定義のログに設定します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
@@ -372,11 +372,11 @@ Accessログの形式をユーザー定義のログに設定する。 ::
    <Access Form="custom">ON</Access>
    <AccessFormat>%a %A %b id=%{userid}C %f %h %H "%{user-agent}i" %m %P "%r" %s %t %T %X %I %O %R %e %S %K</AccessFormat>
 
--  ``<Access>`` の ``Form`` 属性を ``custom`` に設定する。
+-  ``<Access>`` の ``Form`` 属性を ``custom`` に設定します。
 
 -  ``<AccessFormat>`` カスタムログ形式。
 
-上の例の場合は、次のようにAccessログが記録される。 （#Fieldsは記録しない。） ::
+上の例の場合は次のようにAccessログが記録されます。 （#Fieldsは記録しません。） ::
 
     192.168.0.88 192.168.0.12 163276 id=winesoft; image.jpg example.com HTTP "STON" GET 80 "GET /ston/image.jpg?type=png HTTP/1.1" 200 2014-04-03 21:21:54 1 C 204 163276 1 2571978 TCP_MISS HTTP/1.1
     192.168.0.88 192.168.0.12 63276 id=winesoft; vod.mp4 example.com HTTP "STON" POST 80 "GET /ston/vod.mp4?start=10 HTTP/1.1" 200 2014-04-03 21:21:54 12 C 304 363276 2 2571979 TCP_REFRESH_HIT HTTP/1.1
@@ -385,7 +385,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
     192.168.0.88 192.168.0.12 6276 id=ston; ui.js example.com HTTP "STON" GET 80 "GET /ui.js HTTP/1.1" 200 2014-04-03 21:21:54 1 X 233 63276 1 2571982 TCP_MISS HTTP/1.1
     192.168.0.88 192.168.0.12 626 id=winesoft; hls.m4u8 example.com HTTP "STON" GET 80 "GET /hls.m4u8 HTTP/1.1" 200 2014-04-03 21:21:54 2 X 124 6312333276 2 2571983 TCP_REFRESH_HIT HTTP/1.1
 
-`Apacheのログ形式 <https://httpd.apache.org/docs/2.2/ko/mod/mod_log_config.html>`_ をベースに開発され、いくつかの拡張フィールドがあります。 各フィールドの区切り文字には制限がありませんSpaceを使用する場合は、User-AgentのようにSpaceが含まれているフィールドは、二重引用符（"..."）で囲んで設定します。
+`Apacheのログ形式 <https://httpd.apache.org/docs/2.2/ko/mod/mod_log_config.html>`_ をベースに開発されいくつかの拡張フィールドがあります。 各フィールドの区切り文字には制限がありませんSpaceを使用する場合はUser-AgentのようにSpaceが含まれているフィールドは二重引用符（"..."）で囲んで設定します。
 
 -  ``%...a`` クライアントのIP ::
 
@@ -401,7 +401,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
 -  ``%...{foobar}C`` サーバが受信した要求のクッキーFoobarの値  ::
 
-      %{id=}c に 入力すると、Cookie の id=に 相当する 値を 記録
+      %{id=}c に入力するとCookieのid=に相当する値を記録
 
 -  ``%...D`` リクエストを処理するのにかかった時間（MS） ::
 
@@ -409,7 +409,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
 -  ``%...f`` ファイル名 ::
 
-      /mp4/iu.mp4 なら iu.mp4を 記録
+      /mp4/iu.mp4 なら iu.mp4を記録
 
 -  ``%...h`` HostName ::
 
@@ -421,7 +421,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
 -  ``%...{foobar}i`` サーバが受信した要求からfoobar：ヘッダの内容 ::
 
-      %{User-Agent}i として 入力 する 場合 User - Agentの 値を 記録
+      %{User-Agent}i として入力する場合User-Agentの値を記録
 
 -  ``%...m`` リクエストMethod ::
 
@@ -449,7 +449,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
 -  ``%...{format}t`` Formatで定義されている日付形式 ::
 
-      %{%Y-%m-%d %H:%M:%S}T と 入力すると 2014-08-07 06:12:23に 記録した 。
+      %{%Y-%m-%d %H:%M:%S}T と入力すると 2014-08-07 06:12:23 に記録した。
 
 -  ``%...T`` TimeTaken(秒単位) ::
 
@@ -476,7 +476,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
       2048
 
--  ``%...O`` レスポンスヘッダを含む、送信バイト ::
+-  ``%...O`` レスポンスヘッダを含む送信バイト ::
 
       2048
 
@@ -504,15 +504,15 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 
       362
 
-設定したフィールドの値が存在しない場合 - で表記する。 形式が間違ってたらSTON基本フォーマット（Form = "ston"）で動作する。
+設定したフィールドの値が存在しない場合 - で表記します。 形式が間違ってたらSTONデフォルトフォーマット（Form = "ston"）で動作します。
 
-上の表では、各フィールドの…には、 (e.g. “%h %U %r %b) 何も明示しなかったり、記録条件を明示することができる（条件を満たしていない場合 - で記録）。 条件は、HTTPステータスコードのリストに設定するか、！でNOT条件を設定することができる。
+上の表では各フィールドの…には (e.g. “%h %U %r %b) 何も明示しなかったり記録条件を明示することができます。（条件を満たしていない場合 - で記録）。 条件はHTTPステータスコードのリストに設定するか！でNOT条件を設定することができます。
 
-次の例では、 400(Bad Request) エラーまたは 501(Not Implemented) エラーの場合にのみUser-agentを記録する。 ::
+次の例では 400(Bad Request) エラーまたは 501(Not Implemented) エラーの場合にのみUser-agentを記録します。 ::
 
     "%400,501{User-agent}i"
 
-次の例では、正常な状態ではなく、すべてのリクエストでRefererをログに残す。 ::
+次の例では正常な状態ではなくすべてのリクエストでRefererをログに残す。 ::
 
     "%!200,304,302{Referer}i"
 
@@ -523,7 +523,7 @@ Accessログの形式をユーザー定義のログに設定する。 ::
 Originログ
 ====================================
 
-ソースサーバーのすべてのHTTPトランザクションを記録する。 記録時点では、HTTPトランザクションが完了した時点で、転送完了または送信停止時点を意味する。 ::
+オリジンサーバーのすべてのHTTPトランザクションを記録します。 記録時点ではHTTPトランザクションが完了した時点で転送完了または送信停止時点を意味します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
@@ -541,7 +541,7 @@ Originログ
     2012.06.27 17:40:00 357 901 192.168.0.13 GET i.example.com /exB2.jpg 115.71.9.136 200 - - - 8150 189 273 8150 13 0 0 9 4 - no-cache 80 - 35 cache
     2012.06.27 17:40:00 357 901 192.168.0.13 GET i.example.com /exB3.jpg 115.71.9.136 200 - - - 8150 189 273 8150 13 0 0 9 4 - - 80 - 35 cache
 
-ソースサーバーで障害が発生した場合＃[ERROR：xx]で始まるエラーログが記録される。 すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+オリジンサーバーで障害が発生した場合＃[ERROR：xx]で始まるエラーログが記録されます。 すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
 .. figure:: img/time_taken.jpg
    :align: center
@@ -550,36 +550,36 @@ Originログ
 
 -  ``date`` HTTPトランザクションが完了した日付
 -  ``time`` HTTPトランザクションが完了した時刻
--  ``cs-sid`` セッションの一意のID。 同じセッションを介して処理された（再された）HTTPトランザクションは、同じ値を持つ。
--  ``cs-tcount`` トランザクション数。 このHTTPトランザクションが現在のセッションで何番目に処理されたトランザクションであることを記録する。 同じ ``cs-sid`` 値を持つトランザクションであれば、この値は、重複することができない。
+-  ``cs-sid`` セッションの一意のID。 同じセッションで処理された（再された）HTTPトランザクションは同じ値を持つ。
+-  ``cs-tcount`` トランザクション数。 このHTTPトランザクションが現在のセッションで何番目に処理されたトランザクションであることを記録します。 同じ ``cs-sid`` 値を持つトランザクションであればこの値は重複することができない。
 -  ``c-ip`` STONのIP
 -  ``cs-method`` 元サーバーに送信HTTP Method
--  ``s-domain`` ソースサーバーのドメイン
+-  ``s-domain`` オリジンサーバーのドメイン
 -  ``cs-uri`` 元サーバーに送信URI
--  ``s-ip`` ソースサーバーのIP
--  ``sc-status`` ソースサーバーHTTP応答コード
--  ``cs-range`` ソースサーバーに送信されるRange要求値
+-  ``s-ip`` オリジンサーバーのIP
+-  ``sc-status`` オリジンサーバーHTTP応答コード
+-  ``cs-range`` オリジンサーバーに送信されるRange要求値
 -  ``sc-sock-error`` ソケットエラーコード（1 =送信失敗、2 =伝送遅延、3 =接続の終了）
--  ``sc-http-error`` ソースサーバーが4xxまたは5xx応答を与えてくれたときに応答コードを記録
--  ``sc-content-length`` ソースサーバーが送信したContent Length
--  ``cs-requestsize (単位: Bytes)`` ソースサーバーに送信されるHTTPリクエストヘッダサイズ
--  ``sc-responsesize (単位: Bytes)`` ソースサーバーが応答したHTTPヘッダーのサイズ
+-  ``sc-http-error`` オリジンサーバーが4xxまたは5xx応答を与えてくれたときに応答コードを記録
+-  ``sc-content-length`` オリジンサーバーが送信したContent Length
+-  ``cs-requestsize (単位: Bytes)`` オリジンサーバーに送信されるHTTPリクエストヘッダサイズ
+-  ``sc-responsesize (単位: Bytes)`` オリジンサーバーが応答したHTTPヘッダーのサイズ
 -  ``sc-bytes (単位: Bytes)`` 受信したコンテンツサイズ（ヘッダを除く）
--  ``time-taken (単位: ms)`` HTTPトランザクションが完了するまでにかかった合計時間。 セッションの再利用がない場合は、ソケット接続時間まで含んでいる。
+-  ``time-taken (単位: ms)`` HTTPトランザクションが完了するまでにかかった合計時間。 セッションの再利用がない場合はソケット接続時間まで含んでいる。
 -  ``time-dns (単位: ms)`` DNSクエリにかかった時間
--  ``time-connect (単位: ms)`` 元のサーバーとソケットEstablishedまでかかった時間
--  ``time-firstbyte (単位: ms)`` 要求を送信し、応答が来るまでかかった時間
+-  ``time-connect (単位: ms)`` オリジンサーバーとソケットEstablishedまでかかった時間
+-  ``time-firstbyte (単位: ms)`` 要求を送信し応答が来るまでかかった時間
 -  ``time-complete (単位: ms)`` 最初の応答から完了するまでにかかった時間
--  ``cs-reqinfo`` 付加情報。 "+"の文字で区切られている。 バイパスした通信であれば、 "Bypass", Privateバイパスなら "PrivateBypass"に記録される。
--  ``cs-acceptencoding`` ソースサーバーに圧縮されたコンテンツを要求すると、 "gzip+deflate"に記録される。
+-  ``cs-reqinfo`` 付加情報。 "+"の文字で区切られている。 バイパスした通信であれば "Bypass", Privateバイパスなら "PrivateBypass"に記録されます。
+-  ``cs-acceptencoding`` オリジンサーバーに圧縮されたコンテンツを要求すると "gzip+deflate"に記録されます。
 -  ``sc-cachecontrol`` 元サーバーが送信したcachecontrolヘッダ
--  ``s-port`` ソースサーバーのポート
+-  ``s-port`` オリジンサーバーのポート
 -  ``sc-contentencoding`` 元サーバーが送信されるContent-Encodingヘッダ
--  ``session-id`` ソースサーバー要求を発生させたHTTPクライアントセッションID（unsigned int64）
--  ``session-type`` ソースサーバーに要求されたセッションのタイプ
+-  ``session-id`` オリジンサーバー要求を発生させたHTTPクライアントセッションID（unsigned int64）
+-  ``session-type`` オリジンサーバーに要求されたセッションのタイプ
 
    -  ``cache`` キャッシュ用途に使用されたセッション
-   -  ``recovery`` :ref:`origin_exclusion_and_recovery` で回復の目的で使用されたセッション
+   -  ``recovery`` :ref:`origin_exclusion_and_recovery` で復旧の目的で使用されたセッション
    -  ``healthcheck`` :ref:`origin-health-checker` が使用セッション
 
 
@@ -588,14 +588,14 @@ Originログ
 Monitoringログ
 ====================================
 
-5分平均の統計を記録する。 ::
+5分平均の統計を記録します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
 
    <Monitoring Type="size" Unit="10" Retention="10" Form="json">ON</Monitoring>
 
--  ``Form`` ログ形式を指定する。 ( ``json`` または ``xml`` )
+-  ``Form`` ログ形式を指定します。 ( ``json`` または ``xml`` )
 
 
 
@@ -604,14 +604,14 @@ Monitoringログ
 FileSystemログ
 ====================================
 
-:ref:`filesystem` を使用して発生するすべてのFile I / Oトランザクションを記録する。 ::
+:ref:`filesystem` を使用して発生するすべてのFile I / Oトランザクションを記録します。 ::
 
    # server.xml - <Server><VHostDefault><Log>
    # vhosts.xml - <Vhosts><Vhost><Log>
 
    <FileSystem Type="time" Unit="1440" Retention="10">ON</FileSystem>
 
-File I/O トランザクションの終了時に記録される。 トランザクションの終了時点ではcs-methodの形態に依存する。 ::
+File I/O トランザクションの終了時に記録されます。 トランザクションの終了時点ではcs-methodの形態に依存します。 ::
 
     #Fields: date time cs-method cs-path sc-status sc-bytes response-time time-taken sc-cachehit attr session-id
     2012.06.27 16:52:24 ATTR /t 200 0 100 100 TCP_HIT FOLDER 1
@@ -621,14 +621,14 @@ File I/O トランザクションの終了時に記録される。 トランザ�
 
 -  ``date`` File I/Oトランザクションが完了した日付
 -  ``time`` File I/Oトランザクションが完了した時刻
--  ``cs-method`` File I/Oアクセスを形成する。 次の3つのいずれかを持つ。
+-  ``cs-method`` File I/Oアクセスを形成します。 次の3つのいずれかを持つ。
 
    -  ``ATTR`` getattr関数を呼び出します。 関数が返されたときのログ記録
    -  ``OPEN`` ファイルは開かれたがREADしません。 ファイルが閉じられるときにログ記録
-   -  ``READ`` ファイルを開き、READした。 ファイルが閉じられるときにログ記録
+   -  ``READ`` ファイルを開きREADした。 ファイルが閉じられるときにログ記録
 
 -  ``cs-path`` アクセスパス
--  ``sc-status`` 応答コード。 通常のサービス（200）を除いた処理に失敗コードは次のとおりである。
+-  ``sc-status`` 応答コード。 通常のサービス（200）を除いた処理に失敗コードは次のとおりです。
 
    -  ``200`` 通常のサービス
    -  ``301`` バイパスが必要
@@ -660,7 +660,7 @@ File I/O トランザクションの終了時に記録される。 トランザ�
 
    .. note::
 
-      ``session-id`` は、Client（HTTPまたはFile I / O）Contextが作成されるときに割り当てられる。 一般的なファイル処理過程であるOpen - > Read - > Closeでは、Open時点でClient Contextが作成され、Close時点で破壊される。 一方、getattr関数はアトミック（Atomic）関数なので、毎回Client Contextが作成/破壊され、常に新しいsession-idを割り当てられる。
+      ``session-id`` はClient（HTTPまたはFile I / O）Contextが作成されるときに割り当てられる。 一般的なファイル処理過程であるOpen - > Read - > CloseではOpen時点でClient Contextが作成されClose時点で破壊されます。 一方getattr関数はアトミック（Atomic）関数なので毎回Client Contextが作成/破壊され常に新しいsession-idを割り当てられる。
 
 
 
@@ -669,7 +669,7 @@ File I/O トランザクションの終了時に記録される。 トランザ�
 FTP転送
 ====================================
 
-ログがローリングされる指定されたFTPクライアントを使用してログをアップロードする。
+ログがローテートされる指定されたFTPクライアントを使用してログをアップロードします。
 
 
 .. _admin-log-ftpclient:
@@ -677,16 +677,16 @@ FTP転送
 FTPクライアント
 ---------------------
 
-FTPクライアントを設定する。 ローリングされたログをリアルタイムでFTPサーバにアップロードする。
+FTPクライアントを設定します。 ローテートされたログをリアルタイムでFTPサーバにアップロードします。
 
 .. figure:: img/conf_ftpclient.png
    :align: center
 
    FTPクライアントの構造と動作
 
-FTPクライアントは、上図のようSTON外部に存在する。 STONは、ローカルに存在するログをFTPクライアントキューに入力するだけでFTPの動作には関与しない。 FTPクライアントは、自分の設定に応じて、アップロードを行う。
+FTPクライアントは上図のようSTON外部に存在します。 STONはローカルに存在するログをFTPクライアントキューに入力するだけでFTPの動作には関与しません。 FTPクライアントは自分の設定に応じてアップロードを行う。
 
-FTPクライアントは、グローバル設定（server.xml）に設定する。 ::
+FTPクライアントはグローバル設定（server.xml）に設定します。 ::
 
    # server.xml - <Server>
 
@@ -721,29 +721,29 @@ FTPクライアントは、グローバル設定（server.xml）に設定する�
       <Transfer Time="Static">04:00</Transfer>
    </Ftp>
 
--  ``<Ftp>`` FTPクライアントを設定する。 ``Name`` 属性に固有の名前を設定する。
+-  ``<Ftp>`` FTPクライアントを設定します。 ``Name`` 属性に固有の名前を設定します。
 
-   - ``Mode (基本: Passive)`` 接続モード ( ``Passive`` または ``Active`` )
-   - ``Address`` FTPアドレス
-   - ``Account`` FTPアカウント。 もしパスワード（例えばqwerty）を暗号化したい場合は、次のAPIを使用する。 ::
+   - ``Mode (デフォルト: Passive)`` 接続モード ( ``Passive`` または ``Active`` )
+   - ``Address`` FTPアドレス。
+   - ``Account`` FTPアカウント。 もしパスワード（例えばqwerty）を暗号化したい場合は次のAPIを使用します。 ::
 
         /command/encryptpassword?plain=qwerty
 
-     暗号化されたパスワードは、次のように設定する。 ::
+     暗号化されたパスワードは次のように設定します。 ::
 
         <Password Type="enc">dXR9k0xNUZVVYQsK5Bi1cg==</Password>
 
    - ``ConnectTimeout`` 接続待機時間
    - ``TransferTimeout`` 送信待機時間
-   - ``TrafficCap (単位: KB)`` 0より大きい値に設定した場合の転送の最大帯域幅を設定する。
-   - ``DeleteUploaded (基本: OFF)`` 送信完了後に、ログを削除する。
-   - ``BackupOnFail (基本: OFF)`` 送信失敗時のログが削除されないように、ログを次のパスにバックアップする。 ::
+   - ``TrafficCap (単位: KB)`` 0より大きい値に設定した場合の転送の最大帯域幅を設定します。
+   - ``DeleteUploaded (デフォルト: OFF)`` 送信完了後にログを削除します。
+   - ``BackupOnFail (デフォルト: OFF)`` 送信失敗時のログが削除されないようにログを次のパスにバックアップします。 ::
 
         /usr/local/ston/stonb/backup/
 
-     バックアップされたログは、再送信せず、管理者が削除するまで削除されない。
+     バックアップされたログは再送信せず管理者が削除するまで削除されない。
 
-   - ``UploadPath`` アップロードパスを設定する。 別に設定しない場合は、 "/仮想ホスト/" にアップロードする。 example.comのログは/example.com/ディレクトリにアップロードされる。
+   - ``UploadPath`` アップロードパスを設定します。 別に設定しない場合は "/仮想ホスト/" にアップロードします。 example.comのログは/example.com/ディレクトリにアップロードされます。
 
      - ``%{time format}s`` ログの開始時間
      - ``%{time format}e`` ログ終了時刻
@@ -751,26 +751,26 @@ FTPクライアントは、グローバル設定（server.xml）に設定する�
      - ``%v`` 仮想ホスト名
      - ``%h`` 機器HOST名
 
-     例えば、次のように設定した場合 ::
+     例えば次のように設定した場合 ::
 
         # server.xml - <Server><Ftp>
 
         <UploadPath>/log_backup/%v/%s-%e.%p.log</UploadPath>
 
-     アップロードパスは次のとおりである。 ::
+     アップロードパスは次のとおりです。 ::
 
         /log_backup/example.com/200140722_0000-200140722_2300.access.log
 
-   - ``Transfer`` ログ転送時間を指定する。 ``Type`` 属性に基づいて値の形式が違ってくる。
+   - ``Transfer`` ログ転送時間を指定します。 ``Type`` 属性に基づいて値の形式が違ってくる。
 
-     - ``Rotate (基本)`` ローリングされると、すぐに送信する。 値を持たない。
-     - ``Static`` 一日一回、指定した時間に送信する。 たとえば04:00に設定とすれば午前4時に送信を開始する。
-     - ``Interval`` 一定時間間隔で送信する。 たとえば、4に設定した場合、4時間間隔でログを送信する。
+     - ``Rotate (デフォルト)`` ローテートされるとすぐに送信します。 値を持たない。
+     - ``Static`` 一日一回指定した時間に送信します。 たとえば04:00に設定とすれば午前4時に送信を開始します。
+     - ``Interval`` 一定時間間隔で送信します。 たとえば4に設定した場合4時間間隔でログを送信します。
 
-     転送時間を設定した場合、その時点でログがローリングされないように、適切にログ管理ポリシーを設定する必要がある。
+     転送時間を設定した場合その時点でログがローテートされないように適切にログ管理ポリシーを設定する必要があります。
 
 
-FTPクライアントは、curlを使用する。
+FTPクライアントはcurlを使用します。
 
 
 .. admin-log-ftplog:
@@ -778,7 +778,7 @@ FTPクライアントは、curlを使用する。
 FTPのログ
 ---------------------
 
-FTPのログは/usr/local/ston/sys/stonb/stonb.logに統合して保存される。 ::
+FTPのログは/usr/local/ston/sys/stonb/stonb.logに統合して保存されます。 ::
 
     #Fields: date time local-path cs-url file-size time-taken sc-status sc-error-msg
     2014-04-23 17:10:20 /ston_log/winesoft.co.kr/origin_20140423_080000.log ftp://ftp.winesoft.co.kr:21/winesoft.co.kr/origin_20140423_080000.log 381 10006 fail "curl: (7) couldn't connect to host"
@@ -786,7 +786,7 @@ FTPのログは/usr/local/ston/sys/stonb/stonb.logに統合して保存される
     2014-04-23 17:11:00 /ston_log/winesoft.co.kr/origin_20140423_080000.log ftp://ftp.winesoft.co.kr:21/winesoft.co.kr/origin_20140423_080000.log 381 10008 fail "curl: (7) couldn't connect to host"
     2014-04-23 17:11:00 /ston_log/winesoft.co.kr/filesystem_20140423_080000.log ftp://192.168.0.14:21/winesoft.co.kr/filesystem_20140423_080000.log 179 60 success "-"
 
-すべてのフィールドは、スペースで区切られ、各フィールドの意味は次のとおりである。
+すべてのフィールドはスペースで区切られ各フィールドの意味は次のとおりです。
 
 -  ``date`` 日
 -  ``time`` 時間
@@ -804,7 +804,7 @@ FTPのログは/usr/local/ston/sys/stonb/stonb.logに統合して保存される
 ログFTP転送
 ---------------------
 
-ログがローリングされる指定されたFTPクライアントを介してアップロードする。 コンマ（、）で区切って、複数のFTPクライアントを同時に使用することができる。 ::
+ログがローテートされる指定されたFTPクライアントを介してアップロードします。 コンマ（、）で区切って複数のFTPクライアントを同時に使用することができます。 ::
 
    # server.xml - <Server><VHostDefault>
    # vhosts.xml - <Vhosts><Vhost>
@@ -818,4 +818,4 @@ FTPのログは/usr/local/ston/sys/stonb/stonb.logに統合して保存される
 
 -  ``Ftp`` 使用 `FTP クライアント`
 
-ftp://{FTPサーバーアドレス}/{仮想ホスト名}/{ローリングされたログ名}でログをアップロードする。 たとえばftp.dummy.comサーバーに仮想ホストexample.comのローリングされたログ（access_20140424_0000.log）をアップロードするアドレスは ftp://ftp.dummy.com/example.com/access_20140424_0000.logになる。
+ftp://{FTPサーバーアドレス}/{仮想ホスト名}/{ローテートされたログ名}でログをアップロードします。 たとえばftp.dummy.comサーバーに仮想ホストexample.comのローテートされたログ（access_20140424_0000.log）をアップロードするアドレスは ftp://ftp.dummy.com/example.com/access_20140424_0000.logになる。
