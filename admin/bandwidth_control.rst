@@ -3,7 +3,7 @@
 第16章 Bandwidth
 ******************
 
-この章では、仮想ホストごとに、さまざまな方式のBandwidth制限（調節）する方法について説明する。 かつてはBandwidthが一定レベルを超えないように制限することが目的であった。 今効果的にBandwidthを調節することで、その概念が移っていった。 さらに、コンテンツをリアルタイムで分析し、それぞれに最適化されたBandwidthを使用するように設定することができる。
+この章では仮想ホストごとに多様な方式のBandwidth制限（調節）する方法について説明します。 過去にはBandwidthが一定レベルを超えないように制限することが目的でした。 今は効果的にBandwidthを調節することに変わりました。 さらにコンテンツをリアルタイムで分析しそれぞれに最適化されたBandwidthを使用するように設定することができます。
 
 
 .. toctree::
@@ -12,23 +12,23 @@
 仮想ホストBandwidth制限
 ====================================
 
-仮想ホストの最大Bandwidthを制限する。 これは最も優先する物理的な方法である。 ::
+仮想ホストの最大Bandwidthを制限します。 これは最優先する物理的な方法です。 ::
 
    # server.xml - <Server><VHostDefault><Options>
    # vhosts.xml - <Vhosts><Vhost><Options>
 
    <TrafficCap Session="0">0</TrafficCap>
 
--  ``<TrafficCap> (基本: 0 Mbps)``
-   の仮想ホストの最大BandwidthをMbps単位で設定する。 0に設定すると、Bandwidthを制限しない。
-   ``Session (基本: 0 Kbps)`` 属性は、クライアントセッションごとに送信することができる最大のBandwidthを設定する。
+-  ``<TrafficCap> (デフォルト: 0 Mbps)``
+   の仮想ホストの最大BandwidthをMbps単位で設定します。 0に設定するとBandwidthを制限しません。
+   ``Session (デフォルト: 0 Kbps)`` 属性はクライアントセッションごとに送信することができる最大のBandwidthを設定します。
 
-例えば、 ``<TrafficCap>`` を50（Mbps）に設定した場合は50Mbps NICをインストールしたのと同じ効果を出す。 仮想ホストにアクセスするすべてのクライアントBandwidthの合計は50Mbpsを超えることができない。
+例えば ``<TrafficCap>`` を50（Mbps）に設定した場合は50Mbps NICをインストールしたのと同じ効果を出す。 仮想ホストにアクセスするすべてのクライアントBandwidthの合計は50Mbpsを超えることができない。
 
-``Session`` は、次のように動作する
+``Session`` は次のように動作する
 
-1. ``Session`` が設定されていても、すべてのクライアントBandwidthの合計は ``<TrafficCap>`` を超えることができない。
-2. `Bandwidth Throttling`_ を設定しても、クライアントセッションの最大速度は、 ``Session`` を超えることができない。
+1. ``Session`` が設定されていてもすべてのクライアントBandwidthの合計は ``<TrafficCap>`` を超えることができない。
+2. `Bandwidth Throttling`_ を設定してもクライアントセッションの最大速度は ``Session`` を超えることができない。
 
 
 .. _bandwidth-control-bt:
@@ -36,14 +36,14 @@
 Bandwidth Throttling
 ====================================
 
-BT（Bandwidth Throttling）と（各セッションごとに）クライアントの転送帯域幅を動的に調整する機能である。 一般的なメディアファイルの内部には、次のようにヘッダ、V（Video）、A（Audio）で構成されている。
+BT（Bandwidth Throttling）は（各セッションごとに）クライアントの転送帯域幅を動的に調整する機能です。 一般的なメディアファイルの内部には次のようにヘッダ、V（Video）、A（Audio）で構成されている。
 
 .. figure:: img/conf_media_av.png
    :align: center
 
-   ヘッダは、BTの対象ではない。
+   ヘッダはBTの対象ではない。
 
-ヘッダは、再生時間が長いKey Frame周期が短いほど大きくなる。 したがって、認識することができるメディアファイルであれば、円滑な再生のために、ヘッダーは、帯域幅制限なしで送信する。 次の図のようにヘッダが完全に転送された後、BTが開始される。
+ヘッダは再生時間が長いかKey Frame周期が短いほど大きくなる。 したがって認識することができるメディアファイルであれば円滑な再生のためにヘッダーは帯域幅制限なしで送信します。 次の図のようにヘッダが完全に転送された後BTが開始されます。
 
 .. figure:: img/conf_bandwidththrottling2.png
    :align: center
@@ -64,68 +64,68 @@ BT（Bandwidth Throttling）と（各セッションごとに）クライアン�
       <Throttling>OFF</Throttling>
    </BandwidthThrottling>
 
-``<BandwidthThrottling>`` タグの下位に、デフォルトの動作を設定する。
+``<BandwidthThrottling>`` タグの下位にデフォルトの動作を設定します
 
 -  ``<Settings>``
 
-   デフォルトの動作を設定する。
+   デフォルトの動作を設定します。
 
-   -  ``<Bandwidth> (基本: 1000 Kbps)``
-      クライアントの転送帯域幅を設定する。
-      ``Unit`` プロパティを介して基本単位( ``kbps`` , ``mbps`` , ``bytes`` , ``kb`` , ``mb`` )を設定する。
+   -  ``<Bandwidth> (デフォルト: 1000 Kbps)``
+      クライアントの転送帯域幅を設定します。
+      ``Unit`` プロパティを介してデフォルト単位( ``kbps`` 、 ``mbps`` 、 ``bytes`` 、 ``kb`` 、 ``mb`` )を設定します。
 
-   -  ``<Ratio> (基本: 100 %)``
-      ``<Bandwidth>`` 設定の率を反映して、帯域幅を設定する。
+   -  ``<Ratio> (デフォルト: 100 %)``
+      ``<Bandwidth>`` 設定の率を反映して帯域幅を設定します。
 
-   -  ``<Boost> (基本: 5 秒)``
-      一定時間だけのデータを速度制限なしのクライアントに送信する。 データの量は、 ``<Boost>`` X ``<Bandwidth>`` X ``<Ratio>`` 公式で計算する。
+   -  ``<Boost> (デフォルト: 5 秒)``
+      一定時間だけのデータを速度制限なしのクライアントに送信します。 データの量は ``<Boost>`` X ``<Bandwidth>`` X ``<Ratio>`` 公式で計算します。
 
 -  ``<Throttling>``
 
-   -  ``OFF (基本)`` BTを適用しない。
-   -  ``ON`` 条件リストと一致するとBTを適用する。
+   -  ``OFF (デフォルト)`` BTを適用しません。
+   -  ``ON`` 条件リストと一致するとBTを適用します。
 
 
 Bandwidth Throttling条件リスト
 --------------------------
 
-BTの条件のリストを設定する。 条件のリストと一致する必要がBTが適用される。 設定された順序で条件と一致する検査である。 トランスポートポリシーは、/ svc / {仮想ホスト名} /throttling.txtに設定する。 ::
+BTの条件のリストを設定します。 条件のリストと一致するとBTが適用されます。 設定された順序で条件との一致をチェックします。 トランスポートポリシーは/ svc / {仮想ホスト名} /throttling.txtに設定します。 ::
 
    # /svc/www.example.com/throttling.txt
-   # 区切り文字はカンマ（、）であり、{条件}、{Bandwidth},{Ratio},{Boost} 順に表記する。
-   # {条件}を除くすべてのフィールドは省略可能である。
-   # 省略されたフィールドは、 ``<Settings>`` に設定されたデフォルト値が使用される。
-   # すべての条件式はacl.txt設定と同じである。
-   # {Bandwidth} 単位は ``<Settings>`` ``<Bandwidth>`` の  ``Unit`` 属性を使用する。
+   # 区切り文字はカンマ（、）であり、{条件}、{Bandwidth},{Ratio},{Boost} 順に表記します。
+   # {条件}を除くすべてのフィールドは省略可能です。
+   # 省略されたフィールドは ``<Settings>`` に設定されたデフォルト値が使用されます。
+   # すべての条件式はacl.txt設定と同じです。
+   # {Bandwidth} 単位は ``<Settings>`` ``<Bandwidth>`` の ``Unit`` 属性を使用します。
 
-   # 3秒のデータを速度制限なしで送信した後、3Mbps（3000Kbps = 2000Kbps X 150％）で、クライアントに送信する。
+   # 3秒のデータを速度制限なしで送信した後3Mbps（3000Kbps = 2000Kbps X 150％）でクライアントに送信します。
    $IP[192.168.1.1], 2000, 150, 3
 
-   # bandwidthのみを定義する。  5（基本）秒のデータを速度制限なしで送信した後、800 Kbpsで、クライアントに送信する。
+   # bandwidthのみを定義します。 5（デフォルト）秒のデータを速度制限なしで送信した後800 Kbpsでクライアントに送信します。
    !HEADER[referer], 800
 
-   # boostのみを定義する。  10秒のデータを速度制限なしで送信した後、1000 Kbpsに、クライアントに送信する。
+   # boostのみを定義します。  10秒のデータを速度制限なしで送信した後1000 Kbpsにクライアントに送信します。
    HEADER[cookie], , , 10
 
-   # 拡張子がm4aの場合BTを適用しない。
+   # 拡張子がm4aの場合BTを適用しません。
    $URL[*.m4a], no
 
-メディアファイル（MP4、M4A、MP3）を分析すると、Encoding RateからBandwidthを得ることができる。 アクセスされるコンテンツの拡張子は必ず.mp4、.m4a、.mp3のいずれかでなければならない。 動的にBandwidthを抽出するには、次のようにBandwidth後ろ **x** を付ける。 ::
+メディアファイル（MP4M4AMP3）を分析するとEncoding RateからBandwidthを得ることができます。 アクセスされるコンテンツの拡張子は必ず.mp4.m4a.mp3のいずれかでなければならない。 動的にBandwidthを抽出するには次のようにBandwidth後ろ **x** を付ける。 ::
 
-   # /vod/*.mp4 ファイルへのアクセスであれば、bandwidthデーターを所得、取得できない場合は、 1000を bandwidthに使用する。
+   # /vod/*.mp4 ファイルへのアクセスであればbandwidthデーターを取得します。取得できない場合は1000をbandwidthに使用します。
    $URL[/vod/*.mp4], 1000x, 120, 5
 
-   # user-agentヘッダがない場合は、 bandwidthデーターを所得、取得できない場合は、 500をbandwidthに使用する。
+   # user-agentヘッダがない場合は bandwidthデーターを取得します。所得できない場合は 500をbandwidthに使用します。
    !HEADER[user-agent], 500x
 
-   # /low_quality/* ファイルへのアクセスであれば、bandwidthデーターを取得、取得できない場合は、デフォルト値をbandwidthに使用する。
+   # /low_quality/* ファイルへのアクセスであればbandwidthデーターを取得します。取得できない場合はデフォルト値をbandwidthに使用します。
    $URL[/low_quality/*], x, 200
 
 
 QueryString優先条件
 --------------------------
 
-約束されたQueryStringを使用して ``<Bandwidth>`` , ``<Ratio>`` , ``<Boost>`` を動的に設定する。 この設定は、BTの条件よりも優先される。
+規定のQueryStringを使用して ``<Bandwidth>`` , ``<Ratio>`` , ``<Boost>`` を動的に設定します。 この設定はBTの条件よりも優先されます。
 
 ::
 
@@ -143,32 +143,32 @@ QueryString優先条件
 
 -  ``<Bandwidth>`` , ``<Ratio>`` , ``<Boost>`` の ``Param``
 
-    それぞれの意味に合わせてQueryStringキーを設定する。
+    それぞれの意味に合わせてQueryStringキーを設定します。
 
 -  ``<Throttling>`` の ``QueryString``
 
-   - ``OFF (基本)`` QueryStringに条件を再定義していない。
+   - ``OFF (デフォルト)`` QueryStringに条件を再定義しない。
 
    - ``ON`` QueryStringに条件を再定義する。
 
-上記のように設定されている場合は、次のように、クライアントが要求されたURLに基づいてBTが動的に設定される。 ::
+上記のように設定されている場合は次のようにクライアントが要求されたURLに基づいてBTが動的に設定されます。 ::
 
-    # 10秒のデータを速度制限なしで送信した後、1.3Mbps（1mbps X 130％）で、クライアントに送信する。
+    # 10秒のデータを速度制限なしで送信した後1.3Mbps（1mbps X 130％）でクライアントに送信します。
     http://www.winesoft.co.kr/video/sample.wmv?myboost=10&mybandwidth=1&myratio=130
 
-必ずしもすべてのパラメータを指定する必要はない。 ::
+必ずすべてのパラメータを指定する必要はありません。 ::
 
     http://www.winesoft.co.kr/video/sample.wmv?myratio=150
 
-上記のように、いくつかの条件が省略された場合、残りの条件（ここではbandwidth、boost）を決定するために条件のリストを検索する。 ここでも、適切な条件が見つからない場合 ``<Settings>`` に設定されたデフォルト値が使用される。 QueryStringが、いくつかの存在も条件の一覧で、配達オプション（no）が設定されている場合は、BTの適用されない。
+上記のように一部の条件が省略された場合は残りの条件（ここではbandwidthboost）を決定するために条件のリストをチェックします。 ここでも適切な条件が見つからない場合 ``<Settings>`` に設定されたデフォルト値が使用されます。 QueryStringが一部存在しても条件リストで無視オプション（no）が設定されている場合はBTの適用されない。
 
-QueryStringを使用するので、ややもすると :ref:`caching-policy-applyquerystring` と混同を引き起こす恐れがある。
-:ref:`caching-policy-applyquerystring` が ``ON`` の場合、クライアントが要求されたURLのQueryStringがすべて認識されますが ``BoostParam`` , ``BandwidthParam`` , ``RatioParam`` は除外される。 ::
+QueryStringを使用するのでややもすると :ref:`caching-policy-applyquerystring` と混沌する可能性があります。
+:ref:`caching-policy-applyquerystring` が ``ON`` の場合クライアントが要求されたURLのQueryStringがすべて認識されますが ``BoostParam`` , ``BandwidthParam`` , ``RatioParam`` は除外されます。 ::
 
    GET /video.mp4?mybandwidth=2000&myratio=130&myboost=10
    GET /video.mp4?tag=3277&myboost=10&date=20130726
 
-例えば、上記のような入力は、BTを決定する使わだけCaching-Keyを生成したり、元のサーバーに要求を送信する場合は削除される。 つまり、それぞれ次のように認識される。 ::
+例えば上記のような入力はBTを決定するためだけに使用されます。Caching-Keyを生成したりオリジンサーバーに要求を送信する場合は削除されます。 つまりそれぞれ次のように認識されます。 ::
 
     GET /video.mp4
     GET /video.mp4?tag=3277&date=20130726
