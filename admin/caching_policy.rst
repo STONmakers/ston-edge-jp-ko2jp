@@ -1,9 +1,15 @@
-﻿.. _caching-policy:
+.. _caching-policy:
 
 第4章 Cachingポリシー
 ******************
 
 この章ではサービスの中核となるTTL（Time To Live）Caching-Keyと有効期限ポリシーについて説明します。 保存されたコンテンツはTTLの期間内に有効です。 HTTPの仕様はTTLを設定できるようにCache-Controlを明示しています。 しかしこれは絶対的なものではないです。 様々な方式のTTLポリシーと :ref:`caching-purge` を介してサービスの質を向上させることができます。
+
+
+.. note::
+
+   - `[Q&A] どのようなコンテンツをキャッシングすることができますか？ <https://www.youtube.com/watch?v=i7rCZ-6026I&index=9&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+
 
 HTTPはコンテンツを区別する様々な規格が存在します。 それほどCaching-Keyも多様に存在することができます。 コンテンツの変更がないほど元の負荷を軽減することができるだけでなく簡単に拡張することができます。 サービスに最適化された有効期限ポリシーを策定する多様な方法について説明します。
 

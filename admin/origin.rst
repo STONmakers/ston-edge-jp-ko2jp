@@ -1,9 +1,19 @@
-﻿.. _origin:
+.. _origin:
 
 第7章 オリジンサーバー
 ******************
 
 この章ではSTONとオリジンサーバーの関係について説明します。 オリジンサーバーは一般的にHTTPの仕様に準拠しているWebサーバーを意味します。 管理者はサービスを保護するために今回の章のすべての内容を熟知する必要があります。 これを基にオリジンサーバーの障害にも耐久性を備えた柔軟なサービスを構築することができます。
+
+
+.. note::
+
+   - `[Q&A] STON Edge Serverでいう「オリジンサーバー」とは、何を意味しますか？ <https://www.youtube.com/watch?v=HIO9aV-3zzg&index=8&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+   - `[Q&A] STON Edge Serverを設置した後、自分の Webサーバー（オリジンサーバー）とどうやって接続しますか？ <https://www.youtube.com/watch?v=Ag_vFmWSV7k&index=1&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+   - `[Q&A] オリジンサーバーにエラーが生じた場合、 STON Edge Serverはどう対処してくれますか？ <https://www.youtube.com/watch?v=Noahxs7xbsQ&index=2&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+   - `[Q&A] 排除されたオリジンサーバーは、どうやってサービスに再投入されますか？ <https://www.youtube.com/watch?v=BwSVFr7n0SQ&index=4&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+   - `[Q&A] STON Edge Serverのオリジン負荷分散は、どのように動作のですか？ <https://www.youtube.com/watch?v=LeEYi7Pc4Wc&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8&index=3>`_
+
 
 オリジンサーバーは保護されるべきです。 障害の種類が多様なほど対処案も多様です。 オリジン保護ポリシーを適切に設定するとゆったりとした点検時間を持つことができます。
 
