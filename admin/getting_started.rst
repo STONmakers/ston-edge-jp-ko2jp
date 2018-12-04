@@ -1,4 +1,4 @@
-﻿.. _getting-started:
+.. _getting-started:
 
 第2章 開始する
 ******************
@@ -6,6 +6,8 @@
 .. note::
 
    - `[動画講座]みよう！ STON Edge Server - Chapter 1.インストールと実行 <https://youtu.be/sMfp728pMtM?list=PLqvIfHb2IlKeZ-Eym_UPsp6hbpeF-a2gE>`_
+   - `[Q&A] STON Edge Serverの2ティアの構成動作方式について知りたいです。 <https://www.youtube.com/watch?v=0Q6OgTadtHM&index=5&list=PLqvIfHb2IlKfRKtHg7vEZtrP7web63sW8>`_
+
 
 この章ではシステム構成からインストールおよびサンプルの仮想ホストまで構成してみます。 テキストエディタがあれば誰でもすることができます。
 
